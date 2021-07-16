@@ -1,0 +1,38 @@
+@import url("../assets/colors.less");
+
+.global-contatiner{
+    margin: 20px 5% 0 5%;
+    padding:0;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px -7px 5px 2px @main-content-shadow-color;
+
+    .header{
+        margin:0;
+        padding:0;
+        border-bottom: 2px solid @header-border-color;
+    }
+
+    .main-content{
+        display: flex;
+        flex-direction: row;
+        margin:0;
+        padding:0;
+
+        .list-panel{
+            width:25%;
+            margin:0;
+            padding:0;
+            border-right: 2px solid @header-border-color;
+        }
+        
+        .description-panel{
+            width:75%;
+            margin:0;
+            padding:0;
+        }
+    }
+    
+}
+
+
