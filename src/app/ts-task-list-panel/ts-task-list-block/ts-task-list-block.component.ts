@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/entities/task';
+import { Component, Input, OnInit } from '@angular/core';
+import { Status, Task } from 'src/app/entities/task';
 
 @Component({
   selector: 'app-ts-task-list-block',
@@ -8,11 +8,12 @@ import { Task } from 'src/app/entities/task';
 })
 export class TsTaskListBlockComponent implements OnInit {
 
-  task:Task = {
+  @Input() task:Task = {
+    id:1,
     name:"KEKCLIENT-2000",
     description:"Something went wrong.",
     assignee:"Sasha Leguska",
-    status:"done",
+    status:Status.Open,
     timestamp: new Date()
   }
 

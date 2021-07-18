@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Task } from '../entities/task';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-ts-task-list-panel',
@@ -7,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TsTaskListPanelComponent implements OnInit {
 
-  tasks:number[]= [1,2,3,4,5,6,7,8];
+  tasks:Task[]= [];
 
-  constructor() { }
+  constructor(private taskService:TaskService) {
+  }
 
   ngOnInit(): void {
+    this.tasks = this.taskService.getAllTasks();
   }
 
 }

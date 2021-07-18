@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/entities/task';
+import { Status, Task } from 'src/app/entities/task';
+import { TaskService } from 'src/app/task.service';
 
 @Component({
   selector: 'app-ts-task-editor',
@@ -9,16 +10,19 @@ import { Task } from 'src/app/entities/task';
 export class TsTaskEditorComponent implements OnInit {
 
   task:Task = {
+    id:1,
     name:"KEKCLIENT-2000",
     description:"Something went wrong.Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.",
     assignee:"Sasha Leguska",
-    status:"3",
+    status:Status.Closed,
     timestamp: new Date()
   }
 
-  constructor() { }
+  constructor(private taskService:TaskService) { 
+  }
 
   ngOnInit(): void {
+    this.task = <Task>this.taskService.getTask(1);
   }
 
 }
