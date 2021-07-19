@@ -9,13 +9,16 @@ import { TaskService } from '../task.service';
 })
 export class TsTaskListPanelComponent implements OnInit {
 
-  tasks:Task[]= [];
+  tasks: Task []= [];
 
-  constructor(private taskService:TaskService) {
-  }
+  constructor(private taskService:TaskService) { }
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getAllTasks();
+    this.tasks=this.taskService.getAllTasks();
+  }
+
+  deleteTask(id:number){
+    this.tasks=this.taskService.deleteTask(id);
   }
 
 }

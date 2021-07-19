@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
+
+  isAdd:boolean = false;
+  isEdit:boolean = true;
+
   title = 'Dashboard';
+
 }

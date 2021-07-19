@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { Status, Task } from 'src/app/entities/task';
+
 
 @Component({
   selector: 'app-ts-task-list-block',
@@ -8,18 +9,16 @@ import { Status, Task } from 'src/app/entities/task';
 })
 export class TsTaskListBlockComponent implements OnInit {
 
-  @Input() task:Task = {
-    id:1,
-    name:"KEKCLIENT-2000",
-    description:"Something went wrong.",
-    assignee:"Sasha Leguska",
-    status:Status.Open,
-    timestamp: new Date()
-  }
+  @Output() deleteTaskById =  new EventEmitter<number>();
+  @Input() task?:Task 
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  deleteTask():void{
+    this.deleteTaskById.emit(this.task?.id);
   }
 
 }

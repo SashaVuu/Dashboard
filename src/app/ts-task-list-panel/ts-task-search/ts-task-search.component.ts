@@ -12,4 +12,7 @@ export class TsTaskSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showAddEditor(){
+    
+  }
 }

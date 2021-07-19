@@ -7,7 +7,6 @@ import { TsTaskListPanelComponent } from './ts-task-list-panel/ts-task-list-pane
 import { TsTaskDescriptionPanelComponent } from './ts-task-description-panel/ts-task-description-panel.component';
 import { TsTaskListBlockComponent } from './ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TsTaskSearchComponent } from './ts-task-list-panel/ts-task-search/ts-task-search.component';
-import { TsTaskEditorComponent } from './ts-task-description-panel/ts-task-editor/ts-task-editor.component';
 import { TaskService } from './task.service';
 
 @NgModule({
@@ -17,8 +16,7 @@ import { TaskService } from './task.service';
     TsTaskListPanelComponent,
     TsTaskDescriptionPanelComponent,
     TsTaskListBlockComponent,
-    TsTaskSearchComponent,
-    TsTaskEditorComponent
+    TsTaskSearchComponent
   ],
   imports: [
     BrowserModule

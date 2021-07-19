@@ -86,20 +86,17 @@ export class TaskService {
     return true;
   }
 
-  deleteTask(id:number):boolean{
+  deleteTask(id:number):Task[] {
     const allTasks:Task[] = this.getAllTasks();
     const indexOfTask:number = allTasks.findIndex(task => task.id === id);
-    const resultTasksArray:Task[] = allTasks.splice(indexOfTask,1);
-    let isTaskDeleted = true;
+    const deletedTask:Task[] = allTasks.splice(indexOfTask,1);
 
-    if(allTasks.length === resultTasksArray.length){
+    if(deletedTask.length !== 1){
       this.logService.wrn("Something went wrong while deleting task.");
-      isTaskDeleted = false;
     }
 
-    this.putTasksInStorage(resultTasksArray);
-
-    return isTaskDeleted;
+    this.putTasksInStorage(allTasks);
+    return allTasks;
   }
 
   updateTask(id:number,task:Task):boolean{
@@ -107,7 +104,6 @@ export class TaskService {
   }
 
   private putTasksInStorage(tasks:Task[]):void{
-    this.logService.log("Initializing local storage.");
     const tasksStringFormat:string=JSON.stringify(tasks);
     localStorage.setItem('tasks',tasksStringFormat);
   }
