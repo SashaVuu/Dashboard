@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { EditorMode } from 'src/app/entities/editor';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-ts-task-search',
@@ -7,12 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TsTaskSearchComponent implements OnInit {
 
-  constructor() { }
+  constructor(private taskService:TaskService) { }
 
   ngOnInit(): void {
   }
 
   showAddEditor(){
-    
+    this.taskService.editorModeSubject.next(EditorMode.Add);
   }
+
 }

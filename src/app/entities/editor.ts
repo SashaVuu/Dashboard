@@ -1,5 +1,5 @@
 export enum EditorMode{
-    Add,
-    Edit,
-    None,
+    Add = "Add",
+    Edit = "Edit",
+    None = "None",
 }

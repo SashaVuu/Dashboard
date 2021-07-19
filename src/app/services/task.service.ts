@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Status, Task } from './entities/task';
+import { Subject } from 'rxjs';
+import { EditorMode } from '../entities/editor';
+import { Status, Task } from '../entities/task';
 import { LogService } from './log.service';
 
 @Injectable({
@@ -7,6 +9,9 @@ import { LogService } from './log.service';
 })
 export class TaskService {
 
+  editorModeSubject = new Subject<EditorMode>();
+
+  
   private tasks:Task[]=[
       { 
         id:1,

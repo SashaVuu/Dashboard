@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Status, Task } from 'src/app/entities/task';
-import { TaskService } from 'src/app/task.service';
+import { TaskService } from 'src/app/services/task.service';
+import { EditorMode } from '../entities/editor';
 @Component({
   selector: 'app-ts-task-description-panel',
   templateUrl: './ts-task-description-panel.component.html',
@@ -8,8 +9,7 @@ import { TaskService } from 'src/app/task.service';
 })
 export class TsTaskDescriptionPanelComponent implements OnInit {
 
-  @Input() isEdit:boolean = false;
-  @Input() isAdd:boolean = false;
+  mode:EditorMode = EditorMode.None;
 
   task:Task = {
     id:0,
@@ -24,9 +24,14 @@ export class TsTaskDescriptionPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.isEdit){
-      this.task = <Task>this.taskService.getTask(1);
-    }
+    this.task = <Task>this.taskService.getTask(1);
+    
+    this.taskService.editorModeSubject.subscribe((editorMode)=>{
+      console.log("Mode changed");
+      console.log(editorMode);
+      this.mode=editorMode;
+    });
+
   }
 
 

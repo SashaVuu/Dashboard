@@ -7,7 +7,7 @@ import { TsTaskListPanelComponent } from './ts-task-list-panel/ts-task-list-pane
 import { TsTaskDescriptionPanelComponent } from './ts-task-description-panel/ts-task-description-panel.component';
 import { TsTaskListBlockComponent } from './ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TsTaskSearchComponent } from './ts-task-list-panel/ts-task-search/ts-task-search.component';
-import { TaskService } from './task.service';
+import { TaskService } from './services/task.service';
 
 @NgModule({
   declarations: [
