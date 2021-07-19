@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Status, Task } from 'src/app/entities/task';
 import { TaskService } from 'src/app/services/task.service';
@@ -10,45 +10,67 @@ import { EditorMode } from '../entities/editor';
 })
 export class TsTaskDescriptionPanelComponent implements OnInit {
 
-  mode:EditorMode = EditorMode.None;
-  task?:Task;
+  task: Task | undefined;
+  mode: EditorMode = EditorMode.None;
+  modes = EditorMode;
   statuses = Status;
-  taskForm:FormGroup;
-    
-  constructor(private taskService:TaskService) { 
+  taskForm: FormGroup;
+
+  constructor(private taskService: TaskService) {
     this.taskForm = new FormGroup({
-      name:new FormControl(this.task ? this.task.name : "" ),
-      description:new FormControl(this.task ? this.task.description : ""),
-      assignee:new FormControl(this.task ?  this.task.assignee : ""),
-      status:new FormControl(this.task ? this.task.status : Status.Open),
-      timestamp:new FormControl(this.task ? this.task.timestamp : this.taskService.formatDate(new Date()))
+      name: new FormControl(""),
+      description: new FormControl(""),
+      assignee: new FormControl(""),
+      status: new FormControl(Status.Open),
+      timestamp: new FormControl(this.taskService.formatDate(new Date()))
     });
   }
 
   ngOnInit(): void {
-    this.taskService.editorModeSubject.subscribe((editorMode)=>{
-      console.log("Mode changed");
-      console.log(editorMode);
-      this.mode=editorMode.mode;
-      if(editorMode.idTask){
-          this.task=this.taskService.getTask(editorMode.idTask);
+    this.taskService.editorModeSubject.subscribe((editorMode) => {
+
+      this.mode = editorMode.mode;
+
+      if (editorMode.mode == EditorMode.Edit && editorMode.idTask !== undefined) {
+        this.task = this.taskService.getTask(editorMode.idTask);
+        
       }
+
+      if (editorMode.mode == EditorMode.Add) {
+        this.task = undefined;
+      }
+      this.updateTaskForm();
+
     });
+
+    this.updateTaskForm();
   }
 
-  submitForm(){
+  submitForm() {
+    console.log("Value");
     console.log(this.taskForm.value);
 
-    switch(this.mode) { 
-      case EditorMode.Add: { 
-         this.taskService.addTask(<Task>this.taskForm.value);
-         break; 
-      } 
-      case EditorMode.Edit:{ 
+    switch (this.mode) {
+      case EditorMode.Add: {
+        this.taskService.addTask(this.taskForm.value);
+        break;
+      }
+      case EditorMode.Edit: {
         this.taskService.updateTask(<Task>this.taskForm.value);
-         break; 
-      } 
-   } 
+        break;
+      }
+    }
+  }
+
+
+  private updateTaskForm() {
+    this.taskForm.patchValue({
+      name: this.task?.name,
+      description: this.task?.description,
+      assignee: this.task?.assignee,
+      status: this.task?.status,
+      timestamp: this.task?.timestamp
+    });
   }
 
 }

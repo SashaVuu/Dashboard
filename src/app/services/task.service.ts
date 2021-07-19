@@ -54,7 +54,7 @@ export class TaskService {
       }
   }
 
-  getTask(id:number): Task| undefined {
+  getTask(id:number): Task | undefined {
     let allTasks:Task[] = this.getAllTasks();
     let task = allTasks.find(task => task.id === id);
     if (!task) {
@@ -84,17 +84,19 @@ export class TaskService {
   addTask(task:Task):boolean{
     console.log("Add");
     console.log(task);
-    
+
     const allTasks:Task[] = this.getAllTasks();
-    const lastElement:Task|undefined = allTasks[allTasks.length - 1];
-    if(lastElement){
+    const lastElement : Task|undefined = allTasks[allTasks.length - 1];
+    if(lastElement && lastElement.id){
+      console.log("last")
+      console.log(lastElement);
       task.id = lastElement.id++;
+      console.log("task id");
+      console.log(task.id);
     }
     else{
       task.id=1;
     }
-    console.log("Add");
-    console.log(task);
 
     allTasks.push(task);
     this.putTasksInStorage(allTasks);
@@ -127,7 +129,7 @@ export class TaskService {
 
   //Date to yyyy-MM-dd string format.
   formatDate(date:Date):string{
-    return moment(date).format('YYYYMMDD');
+    return moment(date).format('YYYY-MM-DD');
   }
 
 }

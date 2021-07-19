@@ -1,6 +1,6 @@
 <div class="task-editor-container" *ngIf="mode == 'Add' || (mode == 'Edit' && task) else noTask">
     <div class="task-title">
-        <h3 *ngIf="mode == 'Edit'" > {{task?.name | uppercase}}</h3>
+        <h3 *ngIf="mode == modes.Edit" > {{task?.name | uppercase}}</h3>
         <h3 *ngIf="mode == 'Add'" > Add new task:</h3>
     </div>
     <div class="task-form">
@@ -8,21 +8,21 @@
             <div  *ngIf="mode == 'Add'" class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" formControlName="name" [value]="task?.name">
+                    <input type="text" class="form-control" formControlName="name" >
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Assignee:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  formControlName="assignee"  [value]="task?.assignee">
+                    <input type="text" class="form-control"  formControlName="assignee">
                 </div>
             </div>
     
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Status:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" formControlName="status" [value]="task?.status">
+                    <select class="form-control" formControlName="status">
                         <option *ngFor="let status of statuses | keyvalue"> {{status.key}}</option>
                     </select>
                 </div>
@@ -31,14 +31,14 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Time of creation:</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control"  formControlName="timestamp"  [value]="task?.timestamp">
+                    <input type="date" class="form-control"  formControlName="timestamp">
                 </div>
             </div>
     
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Description:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control"  rows="3"  formControlName="description" [value]="task?.description"></textarea>
+                    <textarea class="form-control"  rows="3"  formControlName="description"></textarea>
                 </div>
             </div>
 
