@@ -11,5 +11,5 @@ export interface Task {
     description:string,
     assignee:string,
     status:Status,
-    timestamp:Date
+    timestamp:string
 }

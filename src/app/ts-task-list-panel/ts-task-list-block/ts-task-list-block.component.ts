@@ -24,7 +24,7 @@ export class TsTaskListBlockComponent implements OnInit {
   }
 
   editTask():void{
-    this.taskService.editorModeSubject.next(EditorMode.Edit);
+    this.taskService.editorModeSubject.next({mode:EditorMode.Edit,idTask:this.task?.id});
   }
 
 }

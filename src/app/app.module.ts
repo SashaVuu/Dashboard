@@ -8,6 +8,7 @@ import { TsTaskDescriptionPanelComponent } from './ts-task-description-panel/ts-
 import { TsTaskListBlockComponent } from './ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TsTaskSearchComponent } from './ts-task-list-panel/ts-task-search/ts-task-search.component';
 import { TaskService } from './services/task.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { TaskService } from './services/task.service';
     TsTaskSearchComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]

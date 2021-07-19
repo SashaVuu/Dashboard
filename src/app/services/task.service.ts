@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { EditorMode } from '../entities/editor';
 import { Status, Task } from '../entities/task';
@@ -9,9 +10,9 @@ import { LogService } from './log.service';
 })
 export class TaskService {
 
-  editorModeSubject = new Subject<EditorMode>();
+  editorModeSubject = new Subject<{mode:EditorMode, idTask?:number}>();
 
-  
+
   private tasks:Task[]=[
       { 
         id:1,
@@ -19,7 +20,7 @@ export class TaskService {
         description:"Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
         assignee:"Ivan",
         status:Status.InQA,
-        timestamp: new Date()
+        timestamp: this.formatDate(new Date())
       },
       {
         id:2,
@@ -27,7 +28,7 @@ export class TaskService {
         description:"Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
         assignee:"Ivan",
         status:Status.Closed,
-        timestamp: new Date()
+        timestamp: this.formatDate(new Date())
       },
       {
         id:3,
@@ -35,7 +36,7 @@ export class TaskService {
         description:"Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
         assignee:"Ivan",
         status:Status.Open,
-        timestamp: new Date()
+        timestamp: this.formatDate(new Date())
       },
       {
         id:4,
@@ -43,7 +44,7 @@ export class TaskService {
         description:"Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
         assignee:"Ivan",
         status:Status.Resolved,
-        timestamp: new Date()
+        timestamp: this.formatDate(new Date())
       }
   ];
 
@@ -81,9 +82,20 @@ export class TaskService {
   }
 
   addTask(task:Task):boolean{
-
+    console.log("Add");
+    console.log(task);
+    
     const allTasks:Task[] = this.getAllTasks();
-    task.id = allTasks[allTasks.length - 1].id++;
+    const lastElement:Task|undefined = allTasks[allTasks.length - 1];
+    if(lastElement){
+      task.id = lastElement.id++;
+    }
+    else{
+      task.id=1;
+    }
+    console.log("Add");
+    console.log(task);
+
     allTasks.push(task);
     this.putTasksInStorage(allTasks);
 
@@ -104,13 +116,18 @@ export class TaskService {
     return allTasks;
   }
 
-  updateTask(id:number,task:Task):boolean{
+  updateTask(task:Task):boolean{
     return true;
   }
 
   private putTasksInStorage(tasks:Task[]):void{
     const tasksStringFormat:string=JSON.stringify(tasks);
     localStorage.setItem('tasks',tasksStringFormat);
+  }
+
+  //Date to yyyy-MM-dd string format.
+  formatDate(date:Date):string{
+    return moment(date).format('YYYYMMDD');
   }
 
 }

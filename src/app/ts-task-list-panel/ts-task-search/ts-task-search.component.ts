@@ -15,7 +15,7 @@ export class TsTaskSearchComponent implements OnInit {
   }
 
   showAddEditor(){
-    this.taskService.editorModeSubject.next(EditorMode.Add);
+    this.taskService.editorModeSubject.next({mode:EditorMode.Add});
   }
 
 }
