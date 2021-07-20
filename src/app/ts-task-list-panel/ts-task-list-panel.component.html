@@ -1,3 +1,12 @@
 
-<app-ts-task-search></app-ts-task-search>
+<div class="search-container">
+    <div class="search-input">
+        <input class="form-control" placeholder="Search">
+    </div>
+    <div class="add-button">
+        <button class="btn" (click)="showAddEditor()"><img src="../../../assets/images/add-button.png"></button>
+    </div>
+</div>
+
+
 <app-ts-task-list-block *ngFor="let task of tasks" [task]="task" (deleteTaskById)="deleteTask($event)"></app-ts-task-list-block>

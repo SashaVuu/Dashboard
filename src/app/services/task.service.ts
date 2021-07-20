@@ -81,7 +81,7 @@ export class TaskService {
     return tasks;
   }
 
-  addTask(task:Task):boolean{
+  addTask(task:Task):Task[]{
     console.log("Add");
     console.log(task);
 
@@ -101,8 +101,7 @@ export class TaskService {
     allTasks.push(task);
     this.putTasksInStorage(allTasks);
 
-    //!!!!
-    return true;
+    return allTasks;
   }
 
   deleteTask(id:number):Task[] {

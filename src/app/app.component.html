@@ -4,10 +4,10 @@
     </div>
     <div class="main-content">
         <div class ="list-panel" >
-            <app-ts-task-list-panel></app-ts-task-list-panel>
+            <app-ts-task-list-panel [tasks]="tasks"></app-ts-task-list-panel>
         </div>
         <div class ="description-panel">
-            <app-ts-task-description-panel></app-ts-task-description-panel>
+            <app-ts-task-description-panel [mode]="mode" [task]="task" (addingTask)="addTask($event)" (editingTask)="editTask($event)"></app-ts-task-description-panel>
         </div>
     </div>
 </div>

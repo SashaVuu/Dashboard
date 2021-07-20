@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EditorMode } from '../entities/editor';
 import { Task } from '../entities/task';
 import { TaskService } from '../services/task.service';
 
@@ -7,18 +8,19 @@ import { TaskService } from '../services/task.service';
   templateUrl: './ts-task-list-panel.component.html',
   styleUrls: ['./ts-task-list-panel.component.less']
 })
-export class TsTaskListPanelComponent implements OnInit {
+export class TsTaskListPanelComponent {
 
-  tasks: Task []= [];
+  @Input() tasks: Task []= [];
 
   constructor(private taskService:TaskService) { }
-
-  ngOnInit(): void {
-    this.tasks=this.taskService.getAllTasks();
-  }
 
   deleteTask(id:number){
     this.tasks=this.taskService.deleteTask(id);
   }
+
+  showAddEditor(){
+    this.taskService.editorModeSubject.next({mode:EditorMode.Add});
+  }
+
 
 }

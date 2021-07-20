@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Status, Task } from 'src/app/entities/task';
 import { TaskService } from 'src/app/services/task.service';
 import { EditorMode } from '../entities/editor';
+
+
 @Component({
   selector: 'app-ts-task-description-panel',
   templateUrl: './ts-task-description-panel.component.html',
   styleUrls: ['./ts-task-description-panel.component.less']
 })
-export class TsTaskDescriptionPanelComponent implements OnInit {
+export class TsTaskDescriptionPanelComponent implements OnChanges {
 
-  task: Task | undefined;
-  mode: EditorMode = EditorMode.None;
+  @Input() task?: Task;
+  @Input() mode: EditorMode = EditorMode.None;
+
+  @Output() addingTask:EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() editingTask:EventEmitter<Task> = new EventEmitter<Task>();
+
   modes = EditorMode;
   statuses = Status;
   taskForm: FormGroup;
 
   constructor(private taskService: TaskService) {
     this.taskForm = new FormGroup({
+      id: new FormControl(),
       name: new FormControl(""),
       description: new FormControl(""),
       assignee: new FormControl(""),
@@ -26,45 +33,27 @@ export class TsTaskDescriptionPanelComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.taskService.editorModeSubject.subscribe((editorMode) => {
-
-      this.mode = editorMode.mode;
-
-      if (editorMode.mode == EditorMode.Edit && editorMode.idTask !== undefined) {
-        this.task = this.taskService.getTask(editorMode.idTask);
-        
-      }
-
-      if (editorMode.mode == EditorMode.Add) {
-        this.task = undefined;
-      }
-      this.updateTaskForm();
-
-    });
-
+  ngOnChanges(changes: SimpleChanges): void {
     this.updateTaskForm();
   }
 
   submitForm() {
-    console.log("Value");
-    console.log(this.taskForm.value);
-
     switch (this.mode) {
       case EditorMode.Add: {
-        this.taskService.addTask(this.taskForm.value);
+        console.log("emit");
+        this.addingTask.emit(this.taskForm.value);
         break;
       }
       case EditorMode.Edit: {
-        this.taskService.updateTask(<Task>this.taskForm.value);
+        this.editingTask.emit(this.taskForm.value);
         break;
       }
     }
   }
 
-
   private updateTaskForm() {
     this.taskForm.patchValue({
+      id: this.task?.id,
       name: this.task?.name,
       description: this.task?.description,
       assignee: this.task?.assignee,
