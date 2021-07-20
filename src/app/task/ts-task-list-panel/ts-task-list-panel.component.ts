@@ -14,13 +14,11 @@ export class TsTaskListPanelComponent {
 
   constructor(private taskService: TaskService) { }
 
-  deleteTask(id: number) {
+  deleteTask(id: number):void {
     this.taskService.deleteTask(id);
   }
 
-  showAddEditor() {
-    this.taskService.editorModeSubject$.next({ mode: EditorMode.Add });
+  showAddEditor():void {
+    this.taskService.changeEditorMode(EditorMode.Add);
   }
-
-
 }

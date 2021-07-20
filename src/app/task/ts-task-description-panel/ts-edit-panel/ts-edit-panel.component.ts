@@ -36,6 +36,7 @@ export class TsEditPanelComponent implements OnChanges {
 
   submitForm() {
      this.taskService.updateTask(this.taskForm.value);
+     this.taskService.changeEditorMode(EditorMode.None);
   }
 
   private updateTaskForm(task: Task | undefined) {

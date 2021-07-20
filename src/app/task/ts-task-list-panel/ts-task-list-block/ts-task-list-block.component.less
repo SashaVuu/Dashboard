@@ -6,7 +6,8 @@
     flex-direction:column;
     border-top: 2px solid @header-border-color;
     padding: 10px 20px 10px 20px;
-
+    cursor: pointer;
+    
     .block-header{
 
         display:flex;
@@ -16,8 +17,12 @@
 
         .block-title {
             height: 100%;
+            max-width: 80%;
             h5{
                 font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
         
@@ -37,8 +42,15 @@
         }
     }
 
-    .block-short-desc{
+    .block-short-desc {
         font-size:14px;
+        max-width: 100%;
+        p{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
+
 }
 

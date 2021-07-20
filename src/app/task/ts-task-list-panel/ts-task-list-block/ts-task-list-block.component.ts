@@ -21,7 +21,7 @@ export class TsTaskListBlockComponent {
   }
 
   editTask(): void {
-    this.taskService.editorModeSubject$.next({ mode: EditorMode.Edit, idTask: this.task?.id });
+    this.taskService.changeEditorMode(EditorMode.Edit,this.task?.id);
   }
 
 }

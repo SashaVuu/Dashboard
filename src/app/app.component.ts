@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵɵNgOnChangesFeature } from '@angular/core';
+import { Component, OnDestroy, OnInit, ɵɵNgOnChangesFeature } from '@angular/core';
 import { EditorMode } from './entities/editor';
 import { Task } from './entities/task';
 import { TaskService } from './services/task.service';
@@ -8,7 +8,7 @@ import { TaskService } from './services/task.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,OnDestroy {
 
   tasks: Task[] = [];
   task: Task | undefined;
@@ -35,5 +35,9 @@ export class AppComponent implements OnInit {
 
     });
   }
+
+  ngOnDestroy():void{
+    this.taskService.editorModeSubject$.unsubscribe();
+  } 
 
 }

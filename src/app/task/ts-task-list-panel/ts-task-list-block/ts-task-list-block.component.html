@@ -1,7 +1,7 @@
 
-<div class="block-container" *ngIf="task else noTask">
+<div class="block-container" *ngIf="task else noTask"  (click)="editTask()">
     <div class="block-header">
-        <div class="block-title" (click)="editTask()">
+        <div class="block-title">
             <h5>{{ task.name | uppercase}} </h5>
         </div>
         <div class="block-delete-button">

@@ -18,17 +18,21 @@ export class TaskService {
     }
   }
 
-  getTask(id: number): Task | undefined {
+  public changeEditorMode(mode: EditorMode, idTask?: number) {
+    this.editorModeSubject$.next({ mode: mode, idTask: idTask });
+  }
+
+  public getTask(id: number): Task | undefined {
     let task = this.tasks.find(task => task.id === id);
     console.log(task);
     return task;
   }
 
-  getAllTasks(): Task[] {
+  public getAllTasks(): Task[] {
     return this.getTasksFromStorage();
   }
 
-  addTask(task: Task): void {
+  public addTask(task: Task): void {
     const lastIndex = this.tasks.length - 1;
     const lastElement: Task | undefined = this.tasks[lastIndex];
 
@@ -43,7 +47,7 @@ export class TaskService {
     this.updateLocalStorage(this.tasks);
   }
 
-  deleteTask(id: number): void {
+  public deleteTask(id: number): void {
     const indexOfTask: number = this.tasks.findIndex(task => task.id === id);
     const deletedTask: Task[] = this.tasks.splice(indexOfTask, 1);
 
@@ -54,7 +58,7 @@ export class TaskService {
     this.updateLocalStorage(this.tasks);
   }
 
-  updateTask(task: Task): void {
+  public updateTask(task: Task): void {
     const taskIndex = this.tasks.findIndex(x => x.id == task.id);
     this.tasks[taskIndex] = task;
 

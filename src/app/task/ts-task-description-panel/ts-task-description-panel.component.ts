@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Status, Task } from 'src/app/entities/task';
-import { TaskService } from 'src/app/services/task.service';
+import { Component,Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Task } from 'src/app/entities/task';
 import { EditorMode } from '../../entities/editor';
 
 
@@ -15,14 +13,20 @@ export class TsTaskDescriptionPanelComponent {
   @Input() task?: Task;
   @Input() mode: EditorMode = EditorMode.None;
 
-  @Output() addTask: EventEmitter<Task> = new EventEmitter<Task>();
-  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
-
   modes = EditorMode;
 
   constructor() {
     
   }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   console.log(changes.mode.currentValue);
+  //   if(changes.mode.currentValue == EditorMode.Add ){
+  //       this.task=undefined;
+  //   }
+  // }
+
+
 
 
 }
