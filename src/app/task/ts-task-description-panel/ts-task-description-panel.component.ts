@@ -10,7 +10,7 @@ import { EditorMode } from '../../entities/editor';
   templateUrl: './ts-task-description-panel.component.html',
   styleUrls: ['./ts-task-description-panel.component.less']
 })
-export class TsTaskDescriptionPanelComponent implements OnChanges {
+export class TsTaskDescriptionPanelComponent {
 
   @Input() task?: Task;
   @Input() mode: EditorMode = EditorMode.None;
@@ -19,48 +19,10 @@ export class TsTaskDescriptionPanelComponent implements OnChanges {
   @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   modes = EditorMode;
-  statuses = Status;
-  taskForm: FormGroup;
 
-  constructor(private taskService: TaskService) {
-    this.taskForm = new FormGroup({
-      id: new FormControl(),
-      name: new FormControl(""),
-      description: new FormControl(""),
-      assignee: new FormControl(""),
-      status: new FormControl(Status.Open),
-      timestamp: new FormControl(new Date())
-    });
+  constructor() {
+    
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.task) {
-      this.updateTaskForm(this.task);
-    }
-  }
-
-  submitForm() {
-    switch (this.mode) {
-      case EditorMode.Add: {
-        this.addTask.emit(this.taskForm.value);
-        break;
-      }
-      case EditorMode.Edit: {
-        this.editTask.emit(this.taskForm.value);
-        break;
-      }
-    }
-  }
-
-  private updateTaskForm(task: Task | undefined) {
-    this.taskForm.patchValue({
-      id: task?.id,
-      name: task?.name,
-      description: task?.description,
-      assignee: task?.assignee,
-      status: task?.status,
-      timestamp: task?.timestamp
-    });
-  }
 
 }

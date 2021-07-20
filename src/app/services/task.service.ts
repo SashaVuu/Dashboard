@@ -9,23 +9,64 @@ import { Task } from '../entities/task';
 })
 export class TaskService {
 
+  tasks: Task[] = [];
   editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
 
   constructor() {
     if (!localStorage.getItem('tasks')) {
-      this.putTasksInStorage([]);
-      //this.putTasksInStorage(this.tasks);
+      this.updateLocalStorage([]);
     }
   }
 
   getTask(id: number): Task | undefined {
-    let allTasks: Task[] = this.getAllTasks();
-    let task = allTasks.find(task => task.id === id);
+    let task = this.tasks.find(task => task.id === id);
     console.log(task);
     return task;
   }
 
   getAllTasks(): Task[] {
+    return this.getTasksFromStorage();
+  }
+
+  addTask(task: Task): void {
+    const lastIndex = this.tasks.length - 1;
+    const lastElement: Task | undefined = this.tasks[lastIndex];
+
+    if (lastElement && lastElement.id) {
+      task.id = lastElement.id;
+      task.id++;
+    } else {
+      task.id = 1;
+    }
+
+    this.tasks.push(task);
+    this.updateLocalStorage(this.tasks);
+  }
+
+  deleteTask(id: number): void {
+    const indexOfTask: number = this.tasks.findIndex(task => task.id === id);
+    const deletedTask: Task[] = this.tasks.splice(indexOfTask, 1);
+
+    if (deletedTask.length !== 1) {
+      console.warn("Something went wrong while deleting task.");
+    }
+
+    this.updateLocalStorage(this.tasks);
+  }
+
+  updateTask(task: Task): void {
+    const taskIndex = this.tasks.findIndex(x => x.id == task.id);
+    this.tasks[taskIndex] = task;
+
+    this.updateLocalStorage(this.tasks);
+  }
+
+  private updateLocalStorage(tasks: Task[]): void {
+    const tasksStringFormat: string = JSON.stringify(tasks);
+    localStorage.setItem('tasks', tasksStringFormat);
+  }
+
+  private getTasksFromStorage(): Task[] {
     let tasks: Task[] = [];
     let tasksStringFormat: string | null = localStorage.getItem('tasks');
     if (tasksStringFormat) {
@@ -39,56 +80,10 @@ export class TaskService {
     else {
       console.warn("No data in local storage.");
     }
+
+    this.tasks = tasks;
     return tasks;
   }
 
-  addTask(task: Task): Task[] {
-    const allTasks: Task[] = this.getAllTasks();
-    const lastIndex = allTasks.length - 1;
-    const lastElement: Task | undefined = allTasks[lastIndex];
-    if (lastElement && lastElement.id) {
-      task.id = lastElement.id;
-      task.id++;
-    } else {
-      task.id = 1;
-    }
-
-    allTasks.push(task);
-    this.putTasksInStorage(allTasks);
-
-    return allTasks;
-  }
-
-  deleteTask(id: number): Task[] {
-    const allTasks: Task[] = this.getAllTasks();
-    const indexOfTask: number = allTasks.findIndex(task => task.id === id);
-    const deletedTask: Task[] = allTasks.splice(indexOfTask, 1);
-
-    if (deletedTask.length !== 1) {
-      console.warn("Something went wrong while deleting task.");
-    }
-
-    this.putTasksInStorage(allTasks);
-    return allTasks;
-  }
-
-  updateTask(task: Task): Task[] {
-    const allTasks: Task[] = this.getAllTasks();
-    const taskIndex = allTasks.findIndex(x => x.id == task.id);
-    allTasks[taskIndex] = task;
-
-    this.putTasksInStorage(allTasks);
-    return allTasks;
-  }
-
-  private putTasksInStorage(tasks: Task[]): void {
-    const tasksStringFormat: string = JSON.stringify(tasks);
-    localStorage.setItem('tasks', tasksStringFormat);
-  }
-
-  //Date to yyyy-MM-dd string format.
-  formatDate(date: Date): string {
-    return moment(date).format('YYYY-MM-DD');
-  }
 
 }

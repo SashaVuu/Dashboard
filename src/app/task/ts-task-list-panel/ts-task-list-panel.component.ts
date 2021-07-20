@@ -15,7 +15,7 @@ export class TsTaskListPanelComponent {
   constructor(private taskService: TaskService) { }
 
   deleteTask(id: number) {
-    this.tasks = this.taskService.deleteTask(id);
+    this.taskService.deleteTask(id);
   }
 
   showAddEditor() {

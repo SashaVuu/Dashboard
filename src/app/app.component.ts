@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   title = 'Dashboard';
 
-  constructor(private taskService: TaskService) {
+  constructor(public taskService: TaskService) {
   }
 
   ngOnInit(): void {
@@ -34,14 +34,6 @@ export class AppComponent implements OnInit {
       }
 
     });
-  }
-
-  addTask(task: Task): void {
-    this.tasks = this.taskService.addTask(task);
-  }
-
-  editTask(task: Task): void {
-    this.tasks = this.taskService.updateTask(task);
   }
 
 }
