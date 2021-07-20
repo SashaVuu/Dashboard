@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.tasks = this.taskService.getAllTasks();
-    this.taskService.editorModeSubject.subscribe((editorMode) => {
+    this.taskService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
 

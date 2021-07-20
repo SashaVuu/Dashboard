@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Status, Task } from 'src/app/entities/task';
 import { TaskService } from 'src/app/services/task.service';
-import { EditorMode } from '../entities/editor';
+import { EditorMode } from '../../entities/editor';
 
 
 @Component({
@@ -29,12 +29,14 @@ export class TsTaskDescriptionPanelComponent implements OnChanges {
       description: new FormControl(""),
       assignee: new FormControl(""),
       status: new FormControl(Status.Open),
-      timestamp: new FormControl(this.taskService.formatDate(new Date()))
+      timestamp: new FormControl(new Date())
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.updateTaskForm(this.task);
+    if (changes.task) {
+      this.updateTaskForm(this.task);
+    }
   }
 
   submitForm() {

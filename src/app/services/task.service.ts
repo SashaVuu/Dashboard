@@ -2,50 +2,14 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { EditorMode } from '../entities/editor';
-import { Status, Task } from '../entities/task';
-import { LogService } from './log.service';
+import { Task } from '../entities/task';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  editorModeSubject = new Subject<{ mode: EditorMode, idTask?: number }>();
-
-  private tasks: Task[] = [
-    {
-      id: 1,
-      name: "Kekclient2000",
-      description: "Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
-      assignee: "Ivan",
-      status: Status.InQA,
-      timestamp: this.formatDate(new Date())
-    },
-    {
-      id: 2,
-      name: "Kekclient2001",
-      description: "Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
-      assignee: "Ivan",
-      status: Status.Closed,
-      timestamp: this.formatDate(new Date())
-    },
-    {
-      id: 3,
-      name: "Kekclient2002",
-      description: "Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
-      assignee: "Ivan",
-      status: Status.Open,
-      timestamp: this.formatDate(new Date())
-    },
-    {
-      id: 4,
-      name: "Kekclient2003",
-      description: "Skdjso jfijer ofjeriofj oerirejfor efjoerf ioreferf",
-      assignee: "Ivan",
-      status: Status.Resolved,
-      timestamp: this.formatDate(new Date())
-    }
-  ];
+  editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
 
   constructor() {
     if (!localStorage.getItem('tasks')) {
@@ -80,12 +44,12 @@ export class TaskService {
 
   addTask(task: Task): Task[] {
     const allTasks: Task[] = this.getAllTasks();
-    const lastElement: Task | undefined = allTasks[allTasks.length - 1];
+    const lastIndex = allTasks.length - 1;
+    const lastElement: Task | undefined = allTasks[lastIndex];
     if (lastElement && lastElement.id) {
       task.id = lastElement.id;
       task.id++;
-    }
-    else {
+    } else {
       task.id = 1;
     }
 
