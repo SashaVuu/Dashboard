@@ -10,13 +10,13 @@ import { TaskService } from './services/task.service';
 })
 export class AppComponent implements OnInit {
 
-  tasks:Task[] = [];
-  task: Task| undefined;
-  mode:EditorMode = EditorMode.None; 
+  tasks: Task[] = [];
+  task: Task | undefined;
+  mode: EditorMode = EditorMode.None;
 
   title = 'Dashboard';
 
-  constructor(private taskService:TaskService){
+  constructor(private taskService: TaskService) {
   }
 
   ngOnInit(): void {
@@ -36,12 +36,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-  addTask(task:Task):void{
-    this.tasks =this.taskService.addTask(task);
+  addTask(task: Task): void {
+    this.tasks = this.taskService.addTask(task);
   }
 
-  editTask(task:Task):void{
-    this.taskService.updateTask(task);
+  editTask(task: Task): void {
+    this.tasks = this.taskService.updateTask(task);
   }
 
 

@@ -60,6 +60,7 @@ export class TaskService {
     if (!task) {
       this.logService.wrn(`Task with id - ${id} not found.`);
     }
+    console.log(task);
     return task; 
   }
 
@@ -82,17 +83,11 @@ export class TaskService {
   }
 
   addTask(task:Task):Task[]{
-    console.log("Add");
-    console.log(task);
-
     const allTasks:Task[] = this.getAllTasks();
     const lastElement : Task|undefined = allTasks[allTasks.length - 1];
     if(lastElement && lastElement.id){
-      console.log("last")
-      console.log(lastElement);
-      task.id = lastElement.id++;
-      console.log("task id");
-      console.log(task.id);
+      task.id = lastElement.id;
+      task.id++;
     }
     else{
       task.id=1;
@@ -117,8 +112,13 @@ export class TaskService {
     return allTasks;
   }
 
-  updateTask(task:Task):boolean{
-    return true;
+  updateTask(task:Task):Task[]{
+    const allTasks:Task[] = this.getAllTasks();
+    const taskIndex = allTasks.findIndex(x=>x.id==task.id);
+    allTasks[taskIndex] = task;
+
+    this.putTasksInStorage(allTasks);
+    return allTasks;
   }
 
   private putTasksInStorage(tasks:Task[]):void{
