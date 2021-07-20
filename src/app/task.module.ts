@@ -1,23 +1,30 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
-import { AppComponent } from './app.component';
 import { TsHeaderComponent } from './ts-header/ts-header.component';
 import { TsTaskListPanelComponent } from './ts-task-list-panel/ts-task-list-panel.component';
 import { TsTaskDescriptionPanelComponent } from './ts-task-description-panel/ts-task-description-panel.component';
 import { TsTaskListBlockComponent } from './ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TaskService } from './services/task.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TaskModule } from './task.module';
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    TsHeaderComponent,
+    TsTaskListPanelComponent,
+    TsTaskDescriptionPanelComponent,
+    TsTaskListBlockComponent],
+  providers: [TaskService],
   imports: [
-    BrowserModule,
-    TaskModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
-  bootstrap: [AppComponent]
+  exports:[
+    TsHeaderComponent,
+    TsTaskListPanelComponent,
+    TsTaskDescriptionPanelComponent,
+    TsTaskListBlockComponent,
+  ]
 })
-export class AppModule { }
+export class TaskModule { }

@@ -9,15 +9,12 @@ import { TaskService } from 'src/app/services/task.service';
   templateUrl: './ts-task-list-block.component.html',
   styleUrls: ['./ts-task-list-block.component.less']
 })
-export class TsTaskListBlockComponent implements OnInit {
+export class TsTaskListBlockComponent {
 
   @Output() deleteTaskById =  new EventEmitter<number>();
   @Input() task?:Task 
 
   constructor(private taskService:TaskService) { }
-
-  ngOnInit(): void {
-  }
 
   deleteTask():void{
     this.deleteTaskById.emit(this.task?.id);

@@ -15,8 +15,8 @@ export class TsTaskDescriptionPanelComponent implements OnChanges {
   @Input() task?: Task;
   @Input() mode: EditorMode = EditorMode.None;
 
-  @Output() addingTask:EventEmitter<Task> = new EventEmitter<Task>();
-  @Output() editingTask:EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() addTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() editTask: EventEmitter<Task> = new EventEmitter<Task>();
 
   modes = EditorMode;
   statuses = Status;
@@ -34,31 +34,30 @@ export class TsTaskDescriptionPanelComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.updateTaskForm();
+    this.updateTaskForm(this.task);
   }
 
   submitForm() {
     switch (this.mode) {
       case EditorMode.Add: {
-        console.log("emit");
-        this.addingTask.emit(this.taskForm.value);
+        this.addTask.emit(this.taskForm.value);
         break;
       }
       case EditorMode.Edit: {
-        this.editingTask.emit(this.taskForm.value);
+        this.editTask.emit(this.taskForm.value);
         break;
       }
     }
   }
 
-  private updateTaskForm() {
+  private updateTaskForm(task: Task | undefined) {
     this.taskForm.patchValue({
-      id: this.task?.id,
-      name: this.task?.name,
-      description: this.task?.description,
-      assignee: this.task?.assignee,
-      status: this.task?.status,
-      timestamp: this.task?.timestamp
+      id: task?.id,
+      name: task?.name,
+      description: task?.description,
+      assignee: task?.assignee,
+      status: task?.status,
+      timestamp: task?.timestamp
     });
   }
 

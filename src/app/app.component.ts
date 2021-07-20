@@ -44,5 +44,4 @@ export class AppComponent implements OnInit {
     this.tasks = this.taskService.updateTask(task);
   }
 
-
 }

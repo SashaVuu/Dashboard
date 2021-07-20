@@ -8,5 +8,13 @@
     </div>
 </div>
 
+<app-ts-task-list-block 
+        *ngFor="let task of tasks" 
+        [task]="task" 
+        (deleteTaskById)="deleteTask($event)"
+        >
+</app-ts-task-list-block>
 
-<app-ts-task-list-block *ngFor="let task of tasks" [task]="task" (deleteTaskById)="deleteTask($event)"></app-ts-task-list-block>
+<div *ngIf="tasks.length==0">
+    <div class="no-task">No tasks...</div>
+</div>
