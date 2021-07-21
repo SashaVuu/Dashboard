@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorMode } from 'src/app/entities/editor';
 import { Task } from 'src/app/entities/task';
+import { EditorService } from 'src/app/services/editor.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -12,13 +13,13 @@ export class TsTaskListPanelComponent {
 
   @Input() tasks:Task[] = [];
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private editorService: EditorService) { }
 
   deleteTask(id: number):void {
-    this.taskService.deleteTask(id);
+    this.taskService.deleteEntity(id);
   }
 
   showAddEditor():void {
-    this.taskService.changeEditorMode(EditorMode.Add);
+    this.editorService.changeEditorMode(EditorMode.Add);
   }
 }

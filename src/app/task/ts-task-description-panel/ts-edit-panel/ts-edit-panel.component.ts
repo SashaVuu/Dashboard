@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { FormControl, FormGroup } from '@angular/forms';
 import { EditorMode } from 'src/app/entities/editor';
 import { Status, Task } from 'src/app/entities/task';
+import { EditorService } from 'src/app/services/editor.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class TsEditPanelComponent implements OnChanges {
   statuses = Status;
   taskForm: FormGroup;
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private editorService:EditorService) {
     this.taskForm = new FormGroup({
       id: new FormControl(),
       name: new FormControl(""),
@@ -35,8 +36,8 @@ export class TsEditPanelComponent implements OnChanges {
   }
 
   submitForm() {
-     this.taskService.updateTask(this.taskForm.value);
-     this.taskService.changeEditorMode(EditorMode.None);
+     this.taskService.updateEntity(this.taskForm.value);
+     this.editorService.changeEditorMode(EditorMode.None);
   }
 
   private updateTaskForm(task: Task | undefined) {

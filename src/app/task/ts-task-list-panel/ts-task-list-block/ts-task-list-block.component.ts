@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { EditorMode } from 'src/app/entities/editor';
 import { Task } from 'src/app/entities/task';
+import { EditorService } from 'src/app/services/editor.service';
 import { TaskService } from 'src/app/services/task.service';
 
 
@@ -14,14 +15,14 @@ export class TsTaskListBlockComponent {
   @Output() deleteTaskById = new EventEmitter<number>();
   @Input() task?: Task
 
-  constructor(private taskService: TaskService) { }
+  constructor(private editorService:EditorService) { }
 
   deleteTask(): void {
     this.deleteTaskById.emit(this.task?.id);
   }
 
   editTask(): void {
-    this.taskService.changeEditorMode(EditorMode.Edit,this.task?.id);
+    this.editorService.changeEditorMode(EditorMode.Edit,this.task?.id);
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ɵɵNgOnChangesFeature } from '@angular/core';
 import { EditorMode } from './entities/editor';
 import { Task } from './entities/task';
+import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
 
 @Component({
@@ -16,17 +17,17 @@ export class AppComponent implements OnInit,OnDestroy {
 
   title = 'Dashboard';
 
-  constructor(public taskService: TaskService) {
+  constructor(public taskService: TaskService,private editorService:EditorService) {
   }
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getAllTasks();
-    this.taskService.editorModeSubject$.subscribe((editorMode) => {
+    this.tasks = this.taskService.getAllEntities();
+    this.editorService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
 
       if (editorMode.mode == EditorMode.Edit && editorMode.idTask !== undefined) {
-        this.task = this.taskService.getTask(editorMode.idTask);
+        this.task = this.taskService.getEntity(editorMode.idTask);
       }
 
       if (editorMode.mode == EditorMode.Add) {
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy():void{
-    this.taskService.editorModeSubject$.unsubscribe();
+    this.editorService.editorModeSubject$.unsubscribe();
   } 
 
 }

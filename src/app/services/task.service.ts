@@ -3,36 +3,40 @@ import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { EditorMode } from '../entities/editor';
 import { Task } from '../entities/task';
+import { IEntityCrud } from './entity-crud.interface';
+import { LocalStorageExstensions } from './local-sctorage-exstensions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class TaskService implements IEntityCrud<Task> {
 
   tasks: Task[] = [];
-  editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
+  // editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
+  
+  // public changeEditorMode(mode: EditorMode, idTask?: number) {
+  //   this.editorModeSubject$.next({ mode: mode, idTask: idTask });
+  // }
+
 
   constructor() {
     if (!localStorage.getItem('tasks')) {
-      this.updateLocalStorage([]);
+      LocalStorageExstensions.updateLocalStorage('tasks',[]);
     }
   }
 
-  public changeEditorMode(mode: EditorMode, idTask?: number) {
-    this.editorModeSubject$.next({ mode: mode, idTask: idTask });
+  getAllEntities(): Task[] {
+    return LocalStorageExstensions.getDataFromStorage('tasks');
   }
 
-  public getTask(id: number): Task | undefined {
+  getEntity(id: number): Task | undefined {
     let task = this.tasks.find(task => task.id === id);
     console.log(task);
     return task;
   }
 
-  public getAllTasks(): Task[] {
-    return this.getTasksFromStorage();
-  }
 
-  public addTask(task: Task): void {
+  addEntity(task: Task): void {
     const lastIndex = this.tasks.length - 1;
     const lastElement: Task | undefined = this.tasks[lastIndex];
 
@@ -44,10 +48,18 @@ export class TaskService {
     }
 
     this.tasks.push(task);
-    this.updateLocalStorage(this.tasks);
+    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
   }
 
-  public deleteTask(id: number): void {
+
+  updateEntity(task: Task): void {
+    const taskIndex = this.tasks.findIndex(x => x.id == task.id);
+    this.tasks[taskIndex] = task;
+
+    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
+  }
+
+  deleteEntity(id: number): void {
     const indexOfTask: number = this.tasks.findIndex(task => task.id === id);
     const deletedTask: Task[] = this.tasks.splice(indexOfTask, 1);
 
@@ -55,38 +67,7 @@ export class TaskService {
       console.warn("Something went wrong while deleting task.");
     }
 
-    this.updateLocalStorage(this.tasks);
-  }
-
-  public updateTask(task: Task): void {
-    const taskIndex = this.tasks.findIndex(x => x.id == task.id);
-    this.tasks[taskIndex] = task;
-
-    this.updateLocalStorage(this.tasks);
-  }
-
-  private updateLocalStorage(tasks: Task[]): void {
-    const tasksStringFormat: string = JSON.stringify(tasks);
-    localStorage.setItem('tasks', tasksStringFormat);
-  }
-
-  private getTasksFromStorage(): Task[] {
-    let tasks: Task[] = [];
-    let tasksStringFormat: string | null = localStorage.getItem('tasks');
-    if (tasksStringFormat) {
-      try {
-        tasks = JSON.parse(tasksStringFormat);
-      }
-      catch (e) {
-        console.error(e);
-      }
-    }
-    else {
-      console.warn("No data in local storage.");
-    }
-
-    this.tasks = tasks;
-    return tasks;
+    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
   }
 
 

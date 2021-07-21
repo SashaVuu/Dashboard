@@ -35,7 +35,7 @@ export class TsAddPanelComponent implements OnChanges {
   }
 
   submitForm() {
-    this.taskService.addTask(this.taskForm.value);
+    this.taskService.addEntity(this.taskForm.value);
     this.taskForm.reset();
   }
 
