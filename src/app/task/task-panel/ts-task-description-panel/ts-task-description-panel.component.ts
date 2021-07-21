@@ -1,6 +1,6 @@
 import { Component,Input, OnChanges, SimpleChanges} from '@angular/core';
+import { EditorMode } from 'src/app/entities/editor';
 import { Task } from 'src/app/entities/task';
-import { EditorMode } from '../../entities/editor';
 
 
 @Component({
