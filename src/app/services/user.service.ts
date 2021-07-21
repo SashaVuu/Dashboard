@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { User } from "../entities/user";
+import { Task } from "../entities/task";
 import { IEntityCrud } from "./entity-crud.interface";
 import { LocalStorageExstensions } from "./local-sctorage-exstensions";
 
@@ -38,7 +39,7 @@ export class UserService implements IEntityCrud<User> {
         }
 
         this.users.push(user);
-        LocalStorageExstensions.updateLocalStorage('users',this.users);
+        LocalStorageExstensions.updateLocalStorage('users', this.users);
     }
 
     updateEntity(user: User): void {
@@ -58,11 +59,28 @@ export class UserService implements IEntityCrud<User> {
         LocalStorageExstensions.updateLocalStorage('users', this.users);
     }
 
-    assignTask(task: Task, user: User) {
-
-        //Если таска ни на кого не заасайнена, то просто добавляем юзеру в массив тасок
-
+    assignTask(userId: number, task: Task) {
         //Если таска уже была заасайнена, то удаляем у этого юзера таску и добавляем
+        if(task.assignee){
+            this.deleteTask(task.assignee, task.id as number);
+        }
+        this.addTask(userId,task);
+    }
+
+    
+    private deleteTask(userId: number, taskId: number): void {
+        const userIndex = this.users.findIndex(user => user.id == userId);
+        const userTasks:Task[] = this.users[userIndex].tasks;
+        this.users[userIndex].tasks = userTasks.filter(task => task.id !== taskId);
+
+        LocalStorageExstensions.updateLocalStorage('users', this.users);
+    }
+
+    private addTask(userId: number, task: Task): void {
+        const userIndex = this.users.findIndex(user => user.id == userId);
+        this.users[userIndex].tasks.push(task);
+
+        LocalStorageExstensions.updateLocalStorage('users', this.users);
     }
 
 

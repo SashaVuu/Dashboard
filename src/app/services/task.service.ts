@@ -12,16 +12,10 @@ import { LocalStorageExstensions } from './local-sctorage-exstensions';
 export class TaskService implements IEntityCrud<Task> {
 
   tasks: Task[] = [];
-  // editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
-  
-  // public changeEditorMode(mode: EditorMode, idTask?: number) {
-  //   this.editorModeSubject$.next({ mode: mode, idTask: idTask });
-  // }
-
 
   constructor() {
     if (!localStorage.getItem('tasks')) {
-      LocalStorageExstensions.updateLocalStorage('tasks',[]);
+      LocalStorageExstensions.updateLocalStorage('tasks', []);
     }
   }
 
@@ -48,7 +42,7 @@ export class TaskService implements IEntityCrud<Task> {
     }
 
     this.tasks.push(task);
-    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
+    LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
   }
 
 
@@ -56,7 +50,7 @@ export class TaskService implements IEntityCrud<Task> {
     const taskIndex = this.tasks.findIndex(x => x.id == task.id);
     this.tasks[taskIndex] = task;
 
-    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
+    LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
   }
 
   deleteEntity(id: number): void {
@@ -67,7 +61,7 @@ export class TaskService implements IEntityCrud<Task> {
       console.warn("Something went wrong while deleting task.");
     }
 
-    LocalStorageExstensions.updateLocalStorage('tasks',this.tasks);
+    LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
   }
 
 
