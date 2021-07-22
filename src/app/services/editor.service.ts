@@ -7,10 +7,10 @@ import { EditorMode } from "../entities/editor";
 })
 export class EditorService {
 
-  editorModeSubject$ = new Subject<{ mode: EditorMode, idTask?: number }>();
+  editorModeSubject$ = new Subject<{ mode: EditorMode, idEntity?: number }>();
 
-  public changeEditorMode(mode: EditorMode, idTask?: number) {
-    this.editorModeSubject$.next({ mode: mode, idTask: idTask });
+  public changeEditorMode(mode: EditorMode, idEntity?: number) {
+    this.editorModeSubject$.next({ mode: mode, idEntity: idEntity });
   }
 
 }

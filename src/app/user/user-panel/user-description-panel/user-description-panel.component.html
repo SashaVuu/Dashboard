@@ -1,1 +1,6 @@
-<p>user-description-panel works!</p>
+
+<app-add-panel *ngIf="mode == modes.Add" [user]="user"></app-add-panel>
+<app-edit-panel *ngIf="mode == modes.Edit" [user]="user"></app-edit-panel>
+<div *ngIf="mode == modes.None">
+    <div class="no-user">Choose user...</div>
+</div>

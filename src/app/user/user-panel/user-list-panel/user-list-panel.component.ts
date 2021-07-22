@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EditorMode } from 'src/app/entities/editor';
+import { User } from 'src/app/entities/user';
+import { EditorService } from 'src/app/services/editor.service';
 
 @Component({
   selector: 'app-user-list-panel',
   templateUrl: './user-list-panel.component.html',
   styleUrls: ['./user-list-panel.component.less']
 })
-export class UserListPanelComponent implements OnInit {
+export class UserListPanelComponent {
 
-  constructor() { }
+  @Input() users:User[] = [];
 
-  ngOnInit(): void {
+  constructor( private editorService: EditorService) { }
+
+  showAddEditor():void {
+    this.editorService.changeEditorMode(EditorMode.Add);
   }
-
 }

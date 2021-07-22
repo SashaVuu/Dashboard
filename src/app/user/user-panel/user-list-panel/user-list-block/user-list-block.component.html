@@ -1,1 +1,18 @@
-<p>user-list-block works!</p>
+
+<div class="block-container" *ngIf="user else noUsers"  (click)="editUser(user.id)">
+    <div class="block-header">
+        <div class="block-title">
+            <h5>{{ user.name + " " + user.surname | uppercase}} </h5>
+        </div>
+        <div class="block-delete-button">
+            <button class="btn" (click)="deleteUser(user.id)"><img src="../../../assets/images/delete-button.png"></button>
+        </div>
+    </div>
+    <div class="block-short-desc">
+        <p>{{user.specialization}}</p>
+    </div>
+</div>
+
+<ng-template #noUsers>
+    <div class="no-task">No users...</div>
+</ng-template>

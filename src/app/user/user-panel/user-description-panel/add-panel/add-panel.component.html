@@ -1,1 +1,37 @@
-<p>add-panel works!</p>
+<div class="user-editor-container">
+    <div class="user-title">
+        <h3>Add user:</h3>
+    </div>
+    <div class="user-form">
+        <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" formControlName="name" >
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Surname:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" formControlName="surname" >
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Specialization:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" formControlName="specialization">
+                        <option *ngFor="let specialization of specializations | keyvalue"> {{specialization.key}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="edit-button">
+                <button class="btn btn-primary" type="submit">Add</button>
+            </div>
+        </form>
+    </div>
+
+</div>

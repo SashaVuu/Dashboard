@@ -7,6 +7,8 @@ import { EditPanelComponent } from './user-panel/user-description-panel/edit-pan
 import { UserDescriptionPanelComponent } from './user-panel/user-description-panel/user-description-panel.component';
 import { UserListBlockComponent } from './user-panel/user-list-panel/user-list-block/user-list-block.component';
 import { UserListPanelComponent } from './user-panel/user-list-panel/user-list-panel.component';
+import { BasePanelComponent } from './user-panel/user-description-panel/base-panel/base-panel.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,11 +18,14 @@ import { UserListPanelComponent } from './user-panel/user-list-panel/user-list-p
     EditPanelComponent,
     UserListPanelComponent,
     UserListBlockComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    BasePanelComponent
   ],
   providers: [UserService],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UserModule { }

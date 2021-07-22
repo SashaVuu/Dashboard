@@ -1,0 +1,56 @@
+@import url("../../../../../assets/colors.less");
+
+.block-container{
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    border-top: 2px solid @header-border-color;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+    
+    .block-header{
+
+        display:flex;
+        flex-direction: row;
+        height:40px;
+        justify-content: space-between;
+
+        .block-title {
+            height: 100%;
+            max-width: 80%;
+            h5{
+                font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        
+
+        .block-delete-button{ 
+            height:60%;
+
+            button{
+                margin:0;
+                padding:0;
+                height:100%;
+
+                img{
+                    height:100%;
+                }
+            }
+        }
+    }
+
+    .block-short-desc {
+        font-size:14px;
+        max-width: 100%;
+        p{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+}
+

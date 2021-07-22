@@ -15,10 +15,14 @@ export class UserService implements IEntityCrud<User> {
         if (!localStorage.getItem('users')) {
             LocalStorageExstensions.updateLocalStorage('users', []);
         }
+        else{
+          this.getAllEntities();
+        }
     }
 
     getAllEntities(): User[] {
-        return LocalStorageExstensions.getDataFromStorage('users');
+        this.users=LocalStorageExstensions.getDataFromStorage('users');
+        return this.users;
     }
 
     getEntity(id: number): User | undefined {

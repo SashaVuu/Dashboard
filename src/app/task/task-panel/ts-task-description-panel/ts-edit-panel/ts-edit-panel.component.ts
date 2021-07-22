@@ -1,53 +1,23 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { EditorMode } from 'src/app/entities/editor';
-import { Status, Task } from 'src/app/entities/task';
 import { EditorService } from 'src/app/services/editor.service';
 import { TaskService } from 'src/app/services/task.service';
+import { UserService } from 'src/app/services/user.service';
+import { TsBasePanelComponent } from '../ts-base-panel/ts-base-panel.component';
 
 @Component({
   selector: 'app-ts-edit-panel',
   templateUrl: './ts-edit-panel.component.html',
   styleUrls: ['./ts-edit-panel.component.less']
 })
-export class TsEditPanelComponent implements OnChanges {
+export class TsEditPanelComponent extends TsBasePanelComponent {
 
-  @Input() task?: Task;
-  
-  modes = EditorMode;
-  statuses = Status;
-  taskForm: FormGroup;
-
-  constructor(private taskService: TaskService, private editorService:EditorService) {
-    this.taskForm = new FormGroup({
-      id: new FormControl(),
-      name: new FormControl(""),
-      description: new FormControl(""),
-      assignee: new FormControl(""),
-      status: new FormControl(Status.Open),
-      timestamp: new FormControl(new Date())
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.task) {
-      this.updateTaskForm(this.task);
-    }
+  constructor(userService: UserService, private taskService: TaskService, private editorService:EditorService) {
+    super(userService);
   }
 
   submitForm() {
-     this.taskService.updateEntity(this.taskForm.value);
-     this.editorService.changeEditorMode(EditorMode.None);
-  }
-
-  private updateTaskForm(task: Task | undefined) {
-    this.taskForm.patchValue({
-      id: task?.id,
-      name: task?.name,
-      description: task?.description,
-      assignee: task?.assignee,
-      status: task?.status,
-      timestamp: task?.timestamp
-    });
+    this.taskService.updateEntity(this.taskForm.value);
+    this.editorService.changeEditorMode(EditorMode.None);
   }
 }

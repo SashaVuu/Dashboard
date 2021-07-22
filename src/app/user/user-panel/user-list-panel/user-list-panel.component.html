@@ -1,1 +1,18 @@
-<p>user-list-panel works!</p>
+<div class="search-container">
+    <div class="search-input">
+        <input class="form-control" placeholder="Search">
+    </div>
+    <div class="add-button">
+        <button class="btn" (click)="showAddEditor()"><img src="../../../assets/images/add-button.png"></button>
+    </div>
+</div>
+
+<app-user-list-block 
+        *ngFor="let user of users" 
+        [user]="user"
+        >
+</app-user-list-block>
+
+<div *ngIf="users.length==0">
+    <div class="no-user">No tasks...</div>
+</div>

@@ -15,10 +15,6 @@ export class TsTaskListPanelComponent {
 
   constructor(private taskService: TaskService, private editorService: EditorService) { }
 
-  deleteTask(id: number):void {
-    this.taskService.deleteEntity(id);
-  }
-
   showAddEditor():void {
     this.editorService.changeEditorMode(EditorMode.Add);
   }

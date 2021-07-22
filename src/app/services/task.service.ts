@@ -17,10 +17,14 @@ export class TaskService implements IEntityCrud<Task> {
     if (!localStorage.getItem('tasks')) {
       LocalStorageExstensions.updateLocalStorage('tasks', []);
     }
+    else{
+      this.getAllEntities();
+    }
   }
 
   getAllEntities(): Task[] {
-    return LocalStorageExstensions.getDataFromStorage('tasks');
+    this.tasks = LocalStorageExstensions.getDataFromStorage('tasks');
+    return this.tasks;
   }
 
   getEntity(id: number): Task | undefined {
