@@ -1,8 +1,10 @@
 
 <div class="search-container">
     <div class="search-input">
-        <input class="form-control" placeholder="Search">
+        <!-- <input class="form-control" placeholder="Search"> -->
+        <app-search (change)="filter($event)"  ></app-search>
     </div>
+
     <div class="add-button">
         <button class="btn" (click)="showAddEditor()"><img src="../../../assets/images/add-button.png"></button>
     </div>

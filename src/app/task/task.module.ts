@@ -10,6 +10,7 @@ import { TsTaskDescriptionPanelComponent } from './task-panel/ts-task-descriptio
 import { TsTaskListBlockComponent } from './task-panel/ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TsTaskListPanelComponent } from './task-panel/ts-task-list-panel/ts-task-list-panel.component';
 import { TsBasePanelComponent } from './task-panel/ts-task-description-panel/ts-base-panel/ts-base-panel.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TsBasePanelComponent } from './task-panel/ts-task-description-panel/ts-
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    CoreModule
   ],
   exports:[
     TsTaskListPanelComponent,
