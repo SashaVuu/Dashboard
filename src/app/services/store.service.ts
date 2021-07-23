@@ -12,29 +12,25 @@ export class StoreService {
 
   constructor(private taskService: TaskService, private userService: UserService) { }
 
-  //+
-  addTask(task: Task): void {
+  addAndAssignTask(task: Task): void {
     task = this.taskService.addEntity(task);
     this.assignTask(task.assignee, task.id as number);
   }
 
-  //+
-  updateTask(task: Task): void {
+  updateAndAssignTask(task: Task): void {
     this.taskService.updateEntity(task);
     this.findAndDeleteTaskFromUsers(task.id as number);
     this.assignTask(task.assignee, task.id as number);
   }
 
-  //+
-  deleteTask(id: number): void {
-    this.taskService.deleteEntity(id);
-    this.findAndDeleteTaskFromUsers(id);
+  deleteAndUnassignTask(taskId: number): void {
+    this.taskService.deleteEntity(taskId);
+    this.findAndDeleteTaskFromUsers(taskId);
   }
 
-  //+
-  deleteUser(id: number): void {
-    this.userService.deleteEntity(id);
-    this.deleteAssigneeFromTask(id);
+  deleteUserAndUnassignTask(userId: number): void {
+    this.userService.deleteEntity(userId);
+    this.deleteAssigneeFromTask(userId);
   }
 
   findAndDeleteTaskFromUsers(id: number): void {

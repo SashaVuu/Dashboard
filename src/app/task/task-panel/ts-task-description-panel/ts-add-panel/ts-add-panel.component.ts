@@ -21,7 +21,7 @@ export class TsAddPanelComponent extends TsBasePanelComponent {
     assigneeControl?.setValue(parseInt(assigneeControl.value));
     if (assigneeControl?.value == -1 ){assigneeControl?.setValue(undefined) }
 
-    this.storeService.addTask(this.taskForm.value);
+    this.storeService.addAndAssignTask(this.taskForm.value);
     this.taskForm.reset();
   }
 

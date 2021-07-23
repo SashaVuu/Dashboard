@@ -12,7 +12,6 @@ export class TsBasePanelComponent implements OnInit,OnChanges{
 
   @Input() task?: Task;
   
-  modes = EditorMode;
   statuses = Status;
   taskForm: FormGroup;
   users:User[]=[];

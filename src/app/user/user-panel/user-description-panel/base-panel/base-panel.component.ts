@@ -11,7 +11,6 @@ export class BasePanelComponent implements OnChanges {
 
   @Input() user?: User;
   
-  modes = EditorMode;
   specializations = Specialization;
   userForm: FormGroup;
 

@@ -21,7 +21,7 @@ export class UserListPanelComponent {
   }
 
   deleteUser(id: number): void {
-    this.storeService.deleteUser(id);
+    this.storeService.deleteUserAndUnassignTask(id);
   }
 
   editUser(id: number): void {

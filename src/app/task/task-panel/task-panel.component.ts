@@ -8,7 +8,7 @@ import { Task } from 'src/app/entities/task';
   templateUrl: './task-panel.component.html',
   styleUrls: ['./task-panel.component.less']
 })
-export class TaskPanelComponent implements OnInit,OnDestroy {
+export class TaskPanelComponent implements OnInit {
 
   task: Task | undefined;
   mode: EditorMode = EditorMode.None;
@@ -19,7 +19,6 @@ export class TaskPanelComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("On init");
     this.editorService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
@@ -35,8 +34,4 @@ export class TaskPanelComponent implements OnInit,OnDestroy {
     });
   }
 
-  ngOnDestroy():void{
-    console.log("On destroy");
-    //this.editorService.editorModeSubject$.unsubscribe();
-  } 
 }

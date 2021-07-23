@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { EditorMode } from 'src/app/entities/editor';
 import { EditorService } from 'src/app/services/editor.service';
 import { StoreService } from 'src/app/services/store.service';
-import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { TsBasePanelComponent } from '../ts-base-panel/ts-base-panel.component';
 
@@ -13,7 +12,7 @@ import { TsBasePanelComponent } from '../ts-base-panel/ts-base-panel.component';
 })
 export class TsEditPanelComponent extends TsBasePanelComponent {
 
-  constructor(userService: UserService, private taskService: TaskService, private editorService:EditorService,private storeService:StoreService) {
+  constructor(userService: UserService, private editorService:EditorService,private storeService:StoreService) {
     super(userService);
   }
 
@@ -21,10 +20,10 @@ export class TsEditPanelComponent extends TsBasePanelComponent {
     console.log(this.taskForm.value);
     const assigneeControl = this.taskForm.get("assignee");
     assigneeControl?.setValue(parseInt(assigneeControl.value));
-    if (assigneeControl?.value == -1 ){assigneeControl?.setValue(undefined) }
+    if (assigneeControl?.value == -1){assigneeControl?.setValue(undefined) }
 
 
-    this.storeService.updateTask(this.taskForm.value);
+    this.storeService.updateAndAssignTask(this.taskForm.value);
     this.editorService.changeEditorMode(EditorMode.None);
   }
 }

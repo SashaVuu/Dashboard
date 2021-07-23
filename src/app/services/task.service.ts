@@ -34,7 +34,6 @@ export class TaskService implements IEntityCrud<Task> {
     return task;
   }
 
-
   addEntity(task: Task): Task {
     const lastIndex = this.tasks.length - 1;
     const lastElement: Task | undefined = this.tasks[lastIndex];
@@ -50,7 +49,6 @@ export class TaskService implements IEntityCrud<Task> {
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
     return task;
   }
-
 
   updateEntity(task: Task): void {
     const taskIndex = this.tasks.findIndex(x => x.id == task.id);
@@ -69,6 +67,5 @@ export class TaskService implements IEntityCrud<Task> {
 
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
   }
-
 
 }

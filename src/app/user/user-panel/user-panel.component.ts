@@ -17,7 +17,6 @@ export class UserPanelComponent implements OnInit {
   constructor(public userService:UserService,private editorService:EditorService) { }
 
   ngOnInit(): void {
-    console.log("On init");
     this.editorService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
@@ -31,7 +30,5 @@ export class UserPanelComponent implements OnInit {
       }
     });
   }
-
-  
 
 }
