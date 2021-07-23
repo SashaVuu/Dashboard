@@ -5,6 +5,7 @@ import { EditorMode } from '../entities/editor';
 import { Task } from '../entities/task';
 import { IEntityCrud } from './entity-crud.interface';
 import { LocalStorageExstensions } from './local-sctorage-exstensions';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class TaskService implements IEntityCrud<Task> {
 
   tasks: Task[] = [];
 
-  constructor() {
+  constructor(private userService: UserService) {
     if (!localStorage.getItem('tasks')) {
       LocalStorageExstensions.updateLocalStorage('tasks', []);
     }
-    else{
+    else {
       this.getAllEntities();
     }
   }
@@ -34,7 +35,7 @@ export class TaskService implements IEntityCrud<Task> {
   }
 
 
-  addEntity(task: Task): void {
+  addEntity(task: Task): Task {
     const lastIndex = this.tasks.length - 1;
     const lastElement: Task | undefined = this.tasks[lastIndex];
 
@@ -47,6 +48,7 @@ export class TaskService implements IEntityCrud<Task> {
 
     this.tasks.push(task);
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
+    return task;
   }
 
 

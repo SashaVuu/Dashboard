@@ -1,4 +1,4 @@
-import { Component, Directive, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EditorMode } from 'src/app/entities/editor';
 import { Status, Task } from 'src/app/entities/task';
@@ -17,12 +17,12 @@ export class TsBasePanelComponent implements OnInit,OnChanges{
   taskForm: FormGroup;
   users:User[]=[];
 
-  constructor(private userService:UserService) {
+  constructor(public userService:UserService) {
     this.taskForm = new FormGroup({
       id: new FormControl(),
       name: new FormControl(""),
       description: new FormControl(""),
-      assignee: new FormControl(""),
+      assignee: new FormControl(-1),
       status: new FormControl(Status.Open),
       timestamp: new FormControl(new Date())
     });
@@ -31,7 +31,7 @@ export class TsBasePanelComponent implements OnInit,OnChanges{
   ngOnInit(){
     this.users=this.userService.getAllEntities();
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.task) {
       this.updateTaskForm(this.task);

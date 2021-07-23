@@ -19,13 +19,6 @@ export class TsTaskDescriptionPanelComponent {
     
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   console.log(changes.mode.currentValue);
-  //   if(changes.mode.currentValue == EditorMode.Add ){
-  //       this.task=undefined;
-  //   }
-  // }
-
 
 
 

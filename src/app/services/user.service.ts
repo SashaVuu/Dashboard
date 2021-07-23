@@ -15,13 +15,13 @@ export class UserService implements IEntityCrud<User> {
         if (!localStorage.getItem('users')) {
             LocalStorageExstensions.updateLocalStorage('users', []);
         }
-        else{
-          this.getAllEntities();
+        else {
+            this.getAllEntities();
         }
     }
 
     getAllEntities(): User[] {
-        this.users=LocalStorageExstensions.getDataFromStorage('users');
+        this.users = LocalStorageExstensions.getDataFromStorage('users');
         return this.users;
     }
 
@@ -62,30 +62,5 @@ export class UserService implements IEntityCrud<User> {
 
         LocalStorageExstensions.updateLocalStorage('users', this.users);
     }
-
-    assignTask(userId: number, task: Task) {
-        //Если таска уже была заасайнена, то удаляем у этого юзера таску и добавляем
-        if(task.assignee){
-            this.deleteTask(task.assignee, task.id as number);
-        }
-        this.addTask(userId,task);
-    }
-
-    
-    private deleteTask(userId: number, taskId: number): void {
-        const userIndex = this.users.findIndex(user => user.id == userId);
-        const userTasks:Task[] = this.users[userIndex].tasks;
-        this.users[userIndex].tasks = userTasks.filter(task => task.id !== taskId);
-
-        LocalStorageExstensions.updateLocalStorage('users', this.users);
-    }
-
-    private addTask(userId: number, task: Task): void {
-        const userIndex = this.users.findIndex(user => user.id == userId);
-        this.users[userIndex].tasks.push(task);
-
-        LocalStorageExstensions.updateLocalStorage('users', this.users);
-    }
-
 
 }

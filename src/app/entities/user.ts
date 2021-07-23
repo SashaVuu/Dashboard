@@ -11,5 +11,5 @@ export interface User {
     name:string,
     surname:string,
     specialization:Specialization
-    tasks:Task[]
+    tasks:number[]
 }

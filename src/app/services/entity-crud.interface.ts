@@ -6,7 +6,7 @@ export interface IEntityCrud<Type> {
 
     addEntity(entity: Type): void;
 
-    updateEntity(entity: Type): void;
+    updateEntity(oldEntity:Type, newEntity: Type): void;
 
     deleteEntity(id: number): void;
 

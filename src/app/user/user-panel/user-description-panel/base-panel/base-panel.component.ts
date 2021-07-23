@@ -1,5 +1,5 @@
 import { Component, Directive, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { EditorMode } from 'src/app/entities/editor';
 import { Specialization, User } from 'src/app/entities/user';
 import { UserService } from 'src/app/services/user.service';
@@ -20,12 +20,13 @@ export class BasePanelComponent implements OnChanges {
       id: new FormControl(),
       name: new FormControl(""),
       surname: new FormControl(""),
-      specialization: new FormControl(Specialization.QAEngineer)
+      specialization: new FormControl(Specialization.QAEngineer),
+      tasks:new FormArray([])
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.task) {
+    if (changes.user) {
       this.updateUserForm(this.user);
     }
   }
@@ -35,7 +36,8 @@ export class BasePanelComponent implements OnChanges {
       id: user?.id,
       name: user?.name,
       surname: user?.surname,
-      specializations: user?.specialization
+      specializations: user?.specialization,
+      tasks:user?.tasks
     });
   }
 
