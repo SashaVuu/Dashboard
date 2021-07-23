@@ -23,7 +23,7 @@ export class StoreService {
     this.assignTask(task.assignee, task.id as number);
   }
 
-  deleteAndUnassignTask(taskId: number): void {
+  deleteTaskAndUnassignTask(taskId: number): void {
     this.taskService.deleteEntity(taskId);
     this.findAndDeleteTaskFromUsers(taskId);
   }
@@ -33,12 +33,9 @@ export class StoreService {
     this.deleteAssigneeFromTask(userId);
   }
 
-  findAndDeleteTaskFromUsers(id: number): void {
-    let users = this.userService.getAllEntities();
-    for (let i = 0; i < users.length; i++) {
-      users[i].tasks = users[i].tasks.filter((taskId) => taskId !== id);
-    }
-    LocalStorageExstensions.updateLocalStorage('users', users);
+  deleteTaskFromUserAndUnassign(taskId:number |undefined):void {
+    this.findAndDeleteTaskFromUsers(taskId);
+    this.deleteAssigneeFromTask(taskId);
   }
 
   getUserTasks(userId: number | undefined): Task[] {
@@ -55,6 +52,13 @@ export class StoreService {
     return tasks;
   }
 
+  private findAndDeleteTaskFromUsers(taskId: number|undefined): void {
+    let users = this.userService.getAllEntities();
+    for (let i = 0; i < users.length; i++) {
+      users[i].tasks = users[i].tasks.filter((id) => id !== taskId);
+    }
+    LocalStorageExstensions.updateLocalStorage('users', users);
+  }
 
   private assignTask(userId: number | undefined, taskId: number): void {
     if (userId !== undefined) {
@@ -67,7 +71,7 @@ export class StoreService {
     }
   }
 
-  private deleteAssigneeFromTask(id: number) {
+  private deleteAssigneeFromTask(id: number | undefined) {
     let tasks = this.taskService.getAllEntities();
     let taskIndex = tasks.findIndex((task) => task.assignee === id);
 
@@ -75,5 +79,6 @@ export class StoreService {
 
     LocalStorageExstensions.updateLocalStorage('tasks', tasks);
   }
+
 
 }

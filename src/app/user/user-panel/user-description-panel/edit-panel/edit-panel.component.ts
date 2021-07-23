@@ -29,7 +29,7 @@ export class EditPanelComponent extends BasePanelComponent implements OnInit {
   }
 
   deleteTask(id: number | undefined) {
-    this.storeService.findAndDeleteTaskFromUsers(id as number);
+    this.storeService.deleteTaskFromUserAndUnassign(id);
     this.tasks = this.storeService.getUserTasks(this.user?.id); 
   }
 

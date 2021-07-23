@@ -23,7 +23,7 @@ export class TsTaskListPanelComponent {
   }
 
   deleteTask(id:number): void {
-    this.storeService.deleteAndUnassignTask(id);
+    this.storeService.deleteTaskAndUnassignTask(id);
   }
 
   editTask(id:number): void {
