@@ -7,7 +7,6 @@ import { TaskPanelComponent } from './task-panel/task-panel.component';
 import { TsAddPanelComponent } from './task-panel/ts-task-description-panel/ts-add-panel/ts-add-panel.component';
 import { TsEditPanelComponent } from './task-panel/ts-task-description-panel/ts-edit-panel/ts-edit-panel.component';
 import { TsTaskDescriptionPanelComponent } from './task-panel/ts-task-description-panel/ts-task-description-panel.component';
-import { TsTaskListBlockComponent } from './task-panel/ts-task-list-panel/ts-task-list-block/ts-task-list-block.component';
 import { TsTaskListPanelComponent } from './task-panel/ts-task-list-panel/ts-task-list-panel.component';
 import { TsBasePanelComponent } from './task-panel/ts-task-description-panel/ts-base-panel/ts-base-panel.component';
 import { CoreModule } from '../core/core.module';
@@ -16,7 +15,6 @@ import { CoreModule } from '../core/core.module';
   declarations: [
     TsTaskListPanelComponent,
     TsTaskDescriptionPanelComponent,
-    TsTaskListBlockComponent,
     TsAddPanelComponent,
     TsEditPanelComponent,
     TaskPanelComponent,
@@ -31,8 +29,7 @@ import { CoreModule } from '../core/core.module';
   ],
   exports:[
     TsTaskListPanelComponent,
-    TsTaskDescriptionPanelComponent,
-    TsTaskListBlockComponent,
+    TsTaskDescriptionPanelComponent
   ]
 })
 export class TaskModule { }

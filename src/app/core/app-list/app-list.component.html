@@ -1,1 +1,17 @@
-<p>app-list works!</p>
+<div class="search-container">
+  <div class="search-input">
+    <p>Search:</p>
+    <app-search (change)="filterItems($event)"></app-search>
+  </div>
+</div>
+
+<ng-container
+  *ngFor="let item of list"
+  [ngTemplateOutlet]="itemTmpl"
+  [ngTemplateOutletContext]="{
+    context: {
+      item: item
+    }
+  }"
+>
+</ng-container>
