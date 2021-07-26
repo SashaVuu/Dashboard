@@ -15,27 +15,29 @@ import { TaskService } from 'src/app/services/task.service';
 export class TsTaskListPanelComponent {
 
   @Input() tasks: Task[] = [];
+  searchString: string = "";
 
-  constructor(private taskService: TaskService, private editorService: EditorService, private storeService:StoreService) { }
+  constructor(private taskService: TaskService, private editorService: EditorService, private storeService: StoreService) { }
 
   showAddEditor(): void {
     this.editorService.changeEditorMode(EditorMode.Add);
   }
 
-  deleteTask(id:number): void {
+  deleteTask(id: number): void {
     this.storeService.deleteTaskAndUnassignTask(id);
   }
 
-  editTask(id:number): void {
+  editTask(id: number): void {
+    console.log(id);
     this.editorService.changeEditorMode(EditorMode.Edit, id);
   }
 
-  refreshList(){
+  refreshList() {
     this.tasks = this.taskService.getAllEntities();
   }
 
-  filterItems(items:Task[],searchString:string): Task[] {
-    return items.filter((item) => item.name.toUpperCase().includes(searchString.toString().toUpperCase()));
+  changeSearchString(event: any) {
+    this.searchString = event.value; 
   }
 
 }

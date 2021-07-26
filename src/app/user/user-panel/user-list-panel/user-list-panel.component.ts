@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserListPanelComponent {
 
   @Input() users: User[] = [];
+  searchString: string = "";
 
   constructor(private editorService: EditorService, private userService: UserService, private storeService: StoreService) { }
 
@@ -32,12 +33,8 @@ export class UserListPanelComponent {
     this.users = this.userService.getAllEntities();
   }
 
-  filterItems(items: User[], searchString: string): User[] {
-    return items.filter((item) => {
-      const itemString: string = item.name + " " + item.surname;
-      return itemString.toUpperCase().includes(searchString.toString().toUpperCase());
-    }
-    )
+  changeSearchString(event: any) {
+    this.searchString = event.value; 
   }
-
+  
 }

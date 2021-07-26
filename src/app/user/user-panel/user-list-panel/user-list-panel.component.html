@@ -4,10 +4,17 @@
     </div>
 </div>
 
-<app-list [list]="users"[filter]="filterItems" [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+<div class="search-container">
+    <div class="search-input">
+      <p>Search:</p>
+      <input type="text" (input)="changeSearchString($event.target)"  class="form-control"/>
+    </div>
+</div>
+<app-list [list]="users | filter : searchString" [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
 
 <ng-template #itemTmpl let-context="context">
-    <div class="block-container" *ngIf="context.item"  (click)="editUser(context.item.id)">
+    <app-user-list-block [user]="context.item" (deleteUser)="deleteUser($event)" (editUser)="editUser($event)"></app-user-list-block>
+    <!-- <div class="block-container" *ngIf="context.item"  (click)="editUser(context.item.id)">
         <div class="block-header">
             <div class="block-title">
                 <h5>{{ context.item.name + " " + context.item.surname | uppercase}} </h5>
@@ -19,7 +26,7 @@
         <div class="block-short-desc">
             <p>{{context.item.specialization}}</p>
         </div>
-    </div>
+    </div> -->
 </ng-template>
 
 <div *ngIf="users.length==0">

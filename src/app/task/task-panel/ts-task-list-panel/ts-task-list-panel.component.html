@@ -5,10 +5,20 @@
     </div>
 </div>
 
-<app-list [list]="tasks" [filter]="filterItems" [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+<div class="search-container">
+  <div class="search-input">
+    <p>Search:</p>
+    <input type="text" (input)="changeSearchString($event.target)"  class="form-control"/>
+  </div>
+</div>
+
+<app-list [list]="tasks | filter: searchString"  [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+
 
 <ng-template #itemTmpl let-context="context">
-    <div class="block-container" *ngIf="context.item"  (click)="editTask(context.item.id)">
+    <app-ts-list-block [task]="context.item" (deleteTask)="deleteTask($event)" (editTask)="editTask($event)"></app-ts-list-block>
+
+    <!-- <div class="block-container" *ngIf="context.item"  (click)="editTask(context.item.id)">
         <div class="block-header">
             <div class="block-title">
                 <h5>{{ context.item.name | uppercase}} </h5>
@@ -20,7 +30,7 @@
         <div class="block-short-desc">
             <p>{{context.item.description}}</p>
         </div>
-    </div>
+    </div> -->
 </ng-template>
 
 

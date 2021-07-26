@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -7,36 +7,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class AppListComponent {
 
-  @Input() list: any[] = [];  // array to output
-  @Input() filter: any; //((items: any[], searchString: string) => any[]) | undefined; 
-  @Input() itemTmpl: any;     //template
+  @Input() list: any[] = [];  
+  @Input() itemTmpl: any;  
 
   @Output() refresh = new EventEmitter<any>();
 
-  //????????????????????????????????????????
-  @Output() select = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();
-
   constructor() { }
-
-
-  //????????????????????????????????????????
-  selectItem(item: any) {
-    this.select.emit(item);
-  }
-
-  //????????????????????????????????????????
-  deleteItem(item: any) {
-    this.delete.emit(item);
-  }
-
-  filterItems(searchString: string) {
-    if (searchString === "") {
-      this.refresh.emit();
-    }
-    else {
-      this.list = this.filter(this.list, searchString);
-    }
-  }
 
 }
