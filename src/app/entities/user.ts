@@ -1,9 +1,8 @@
-import { Task } from "./task";
 
 export enum Specialization {
-    QAEngineer="QA Engineer",
-    FrontEndDev ="Front-end Developer",
-    BackEndDev ="Back-end Developer"
+    QAEngineer= "QAEngineer",
+    FrontEndDev = "FrontEndDev",
+    BackEndDev = "BackEndDev"
 }
 
 export interface User {

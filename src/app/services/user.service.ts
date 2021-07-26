@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { User } from "../entities/user";
-import { Task } from "../entities/task";
 import { IEntityCrud } from "./entity-crud.interface";
 import { LocalStorageExstensions } from "./local-sctorage-exstensions";
 

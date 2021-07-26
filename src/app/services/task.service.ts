@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
-import { Subject } from 'rxjs';
-import { EditorMode } from '../entities/editor';
 import { Task } from '../entities/task';
 import { IEntityCrud } from './entity-crud.interface';
 import { LocalStorageExstensions } from './local-sctorage-exstensions';

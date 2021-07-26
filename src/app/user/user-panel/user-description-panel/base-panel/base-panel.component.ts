@@ -30,12 +30,12 @@ export class BasePanelComponent implements OnChanges {
     }
   }
 
-  private updateUserForm(user: User | undefined) {
+  updateUserForm(user: User | undefined) {
     this.userForm.patchValue({
       id: user?.id,
       name: user?.name,
       surname: user?.surname,
-      specializations: user?.specialization,
+      specialization: user?.specialization,
       tasks:user?.tasks
     });
   }

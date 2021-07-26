@@ -1,6 +1,5 @@
 import { Directive, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { EditorMode } from 'src/app/entities/editor';
 import { Status, Task } from 'src/app/entities/task';
 import { User } from 'src/app/entities/user';
 import { UserService } from 'src/app/services/user.service';

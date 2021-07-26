@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/entities/task';
 import { EditorService } from 'src/app/services/editor.service';
 import { StoreService } from 'src/app/services/store.service';
@@ -11,7 +11,7 @@ import { BasePanelComponent } from '../base-panel/base-panel.component';
   templateUrl: './edit-panel.component.html',
   styleUrls: ['./edit-panel.component.less']
 })
-export class EditPanelComponent extends BasePanelComponent implements OnInit {
+export class EditPanelComponent extends BasePanelComponent {
 
   tasks: Task[] = [];
 
@@ -19,9 +19,11 @@ export class EditPanelComponent extends BasePanelComponent implements OnInit {
     super();
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges):void{
+    if (changes.user) {
+      this.updateUserForm(this.user);
+    }
     this.tasks = this.storeService.getUserTasks(this.user?.id);
-    console.log(this.tasks);
   }
 
   submitForm() {

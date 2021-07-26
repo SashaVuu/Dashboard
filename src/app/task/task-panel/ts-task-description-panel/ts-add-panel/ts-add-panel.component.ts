@@ -1,6 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component} from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
-import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { TsBasePanelComponent } from '../ts-base-panel/ts-base-panel.component';
 
