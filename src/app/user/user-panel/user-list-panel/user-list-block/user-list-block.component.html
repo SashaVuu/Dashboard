@@ -1,4 +1,4 @@
-<div class="block-container" *ngIf="user"  (click)="editUser.emit(user.id)">
+<div class="block-container" *ngIf="user"  (click)="editUser.emit(user.id)"  lightning lightColor="black">
     <div class="block-header">
         <div class="block-title">
             <h5>{{ user.name + " " +  user.surname | uppercase}} </h5>

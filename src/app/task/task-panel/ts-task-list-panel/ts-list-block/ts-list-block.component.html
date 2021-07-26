@@ -1,4 +1,4 @@
-<div class="block-container" *ngIf="task"  (click)="editTask.emit(task.id)">
+<div class="block-container" *ngIf="task"  (click)="editTask.emit(task.id)" lightning lightColor="red">
     <div class="block-header">
         <div class="block-title">
             <h5>{{ task.name | uppercase}} </h5>
