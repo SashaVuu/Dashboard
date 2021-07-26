@@ -10,7 +10,6 @@ import { TsTaskDescriptionPanelComponent } from './task-panel/ts-task-descriptio
 import { TsTaskListPanelComponent } from './task-panel/ts-task-list-panel/ts-task-list-panel.component';
 import { TsBasePanelComponent } from './task-panel/ts-task-description-panel/ts-base-panel/ts-base-panel.component';
 import { CoreModule } from '../core/core.module';
-import { FilterPipe } from './pipes/filter.pipe';
 import { TsListBlockComponent } from './task-panel/ts-task-list-panel/ts-list-block/ts-list-block.component';
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { TsListBlockComponent } from './task-panel/ts-task-list-panel/ts-list-bl
     TsEditPanelComponent,
     TaskPanelComponent,
     TsBasePanelComponent,
-    FilterPipe,
     TsListBlockComponent
   ],
   providers: [TaskService],

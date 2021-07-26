@@ -10,12 +10,12 @@
       <input type="text" (input)="changeSearchString($event.target)"  class="form-control"/>
     </div>
 </div>
-<app-list [list]="users | filter : searchString" [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+<app-list [list]="users | filter : searchString : filterContext" [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
 
 <ng-template #itemTmpl let-context="context">
     <app-user-list-block [user]="context.item" (deleteUser)="deleteUser($event)" (editUser)="editUser($event)"></app-user-list-block>
 </ng-template>
 
-<div *ngIf="users.length==0">
+<div *ngIf="!users?.length">
     <div class="no-user">No users...</div>
 </div>

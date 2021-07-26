@@ -1,5 +1,6 @@
 import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 import { Component, Input, OnInit } from '@angular/core';
+import { FilterContext, TaskFilterStrategy } from 'src/app/core/pipes/strategy';
 import { EditorMode } from 'src/app/entities/editor';
 import { Task } from 'src/app/entities/task';
 import { User } from 'src/app/entities/user';
@@ -16,6 +17,7 @@ export class TsTaskListPanelComponent {
 
   @Input() tasks: Task[] = [];
   searchString: string = "";
+  filterContext =  new FilterContext(new TaskFilterStrategy());
 
   constructor(private taskService: TaskService, private editorService: EditorService, private storeService: StoreService) { }
 

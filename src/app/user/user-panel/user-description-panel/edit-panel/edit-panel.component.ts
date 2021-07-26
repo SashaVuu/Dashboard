@@ -27,6 +27,8 @@ export class EditPanelComponent extends BasePanelComponent {
   }
 
   submitForm() {
+    //Костыль
+    this.userForm.value.tasks = this.user?.tasks;
     this.userService.updateEntity(this.userForm.value);
   }
 

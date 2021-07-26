@@ -20,7 +20,7 @@ export class BasePanelComponent implements OnChanges {
       name: new FormControl(""),
       surname: new FormControl(""),
       specialization: new FormControl(Specialization.QAEngineer),
-      tasks:new FormControl([])
+      tasks:new FormArray([])
     });
   }
 

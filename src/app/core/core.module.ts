@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AppListComponent } from './app-list/app-list.component';
 import { AppSearchComponent } from './app-search/app-search.component';
 import { LightningDirective } from './directives/lightning.directive';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 
@@ -10,7 +11,8 @@ import { LightningDirective } from './directives/lightning.directive';
   declarations: [
     AppListComponent,
     AppSearchComponent,
-    LightningDirective
+    LightningDirective,
+    FilterPipe
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { LightningDirective } from './directives/lightning.directive';
   exports:[
     AppListComponent,
     AppSearchComponent,
-    LightningDirective
+    LightningDirective,
+    FilterPipe
   ]
 })
 export class CoreModule { }

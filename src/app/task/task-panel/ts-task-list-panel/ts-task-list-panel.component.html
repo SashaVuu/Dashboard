@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<app-list [list]="tasks | filter: searchString"  [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+<app-list [list]="tasks | filter: searchString : filterContext"  [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
 
 
 <ng-template #itemTmpl let-context="context">
@@ -20,6 +20,6 @@
 </ng-template>
 
 
-<div *ngIf="tasks.length==0">
+<div *ngIf="!tasks?.length">
     <div class="no-task">No tasks...</div>
 </div>

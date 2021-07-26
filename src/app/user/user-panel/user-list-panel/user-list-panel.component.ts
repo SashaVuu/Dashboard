@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FilterContext, UserFilterStrategy } from 'src/app/core/pipes/strategy';
 import { EditorMode } from 'src/app/entities/editor';
 import { User } from 'src/app/entities/user';
 import { EditorService } from 'src/app/services/editor.service';
@@ -14,7 +15,8 @@ export class UserListPanelComponent {
 
   @Input() users: User[] = [];
   searchString: string = "";
-
+  filterContext =  new FilterContext(new UserFilterStrategy());
+  
   constructor(private editorService: EditorService, private userService: UserService, private storeService: StoreService) { }
 
   showAddEditor(): void {

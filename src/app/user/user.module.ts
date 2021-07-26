@@ -9,7 +9,6 @@ import { UserListPanelComponent } from './user-panel/user-list-panel/user-list-p
 import { BasePanelComponent } from './user-panel/user-description-panel/base-panel/base-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
-import { FilterPipe } from './pipes/filter.pipe';
 import { UserListBlockComponent } from './user-panel/user-list-panel/user-list-block/user-list-block.component';
 
 
@@ -21,7 +20,6 @@ import { UserListBlockComponent } from './user-panel/user-list-panel/user-list-b
     UserListPanelComponent,
     UserPanelComponent,
     BasePanelComponent,
-    FilterPipe,
     UserListBlockComponent
   ],
   providers: [UserService],
