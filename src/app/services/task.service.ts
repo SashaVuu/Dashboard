@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { Task } from '../entities/task';
 import { IEntityCrud } from './entity-crud.interface';
 import { LocalStorageExstensions } from './local-sctorage-exstensions';
@@ -10,8 +11,15 @@ import { UserService } from './user.service';
 export class TaskService implements IEntityCrud<Task> {
 
   tasks: Task[] = [];
+  //tasksObs:Observable<Task> =new Observable();
+
+  private _tasks$: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
+  public tasks$: Observable<Task[]>
 
   constructor(private userService: UserService) {
+    this._tasks$ = new BehaviorSubject<Task[]>([]);
+    this.tasks$ = this._tasks$.asObservable();
+
     if (!localStorage.getItem('tasks')) {
       LocalStorageExstensions.updateLocalStorage('tasks', []);
     }
@@ -22,6 +30,7 @@ export class TaskService implements IEntityCrud<Task> {
 
   getAllEntities(): Task[] {
     this.tasks = LocalStorageExstensions.getDataFromStorage('tasks');
+    this._tasks$.next(this.tasks);
     return this.tasks;
   }
 
@@ -44,6 +53,9 @@ export class TaskService implements IEntityCrud<Task> {
 
     this.tasks.push(task);
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
+
+    this._tasks$.next(this.tasks);
+
     return task;
   }
 
@@ -52,6 +64,8 @@ export class TaskService implements IEntityCrud<Task> {
     this.tasks[taskIndex] = task;
 
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
+    this._tasks$.next(this.tasks);
+
   }
 
   deleteEntity(id: number): void {
@@ -63,6 +77,7 @@ export class TaskService implements IEntityCrud<Task> {
     }
 
     LocalStorageExstensions.updateLocalStorage('tasks', this.tasks);
+    this._tasks$.next(this.tasks);
   }
 
 }
