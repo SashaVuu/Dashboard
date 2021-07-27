@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../entities/task';
 import { IEntityCrud } from './entity-crud.interface';
 import { LocalStorageExstensions } from './local-sctorage-exstensions';
@@ -10,9 +10,7 @@ import { UserService } from './user.service';
 })
 export class TaskService implements IEntityCrud<Task> {
 
-  tasks: Task[] = [];
-  //tasksObs:Observable<Task> =new Observable();
-
+  private tasks: Task[] = [];
   private _tasks$: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
   public tasks$: Observable<Task[]>
 

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
 import { User } from "../entities/user";
 import { IEntityCrud } from "./entity-crud.interface";
 import { LocalStorageExstensions } from "./local-sctorage-exstensions";
@@ -8,9 +9,14 @@ import { LocalStorageExstensions } from "./local-sctorage-exstensions";
 })
 export class UserService implements IEntityCrud<User> {
 
-    users: User[] = [];
-
+    private users: User[] = [];
+    private _users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+    public users$: Observable<User[]>
+  
     constructor() {
+        this._users$ = new BehaviorSubject<User[]>([]);
+        this.users$ = this._users$.asObservable();
+
         if (!localStorage.getItem('users')) {
             LocalStorageExstensions.updateLocalStorage('users', []);
         }
@@ -21,6 +27,7 @@ export class UserService implements IEntityCrud<User> {
 
     getAllEntities(): User[] {
         this.users = LocalStorageExstensions.getDataFromStorage('users');
+        this._users$.next(this.users);
         return this.users;
     }
 
@@ -43,12 +50,16 @@ export class UserService implements IEntityCrud<User> {
 
         this.users.push(user);
         LocalStorageExstensions.updateLocalStorage('users', this.users);
+
+        this._users$.next(this.users);
     }
 
     updateEntity(user: User): void {
         const userIndex = this.users.findIndex(x => x.id == user.id);
         this.users[userIndex] = user;
         LocalStorageExstensions.updateLocalStorage('users', this.users);
+
+        this._users$.next(this.users);
     }
 
     deleteEntity(id: number): void {
@@ -60,6 +71,7 @@ export class UserService implements IEntityCrud<User> {
         }
 
         LocalStorageExstensions.updateLocalStorage('users', this.users);
+        this._users$.next(this.users);
     }
 
 }

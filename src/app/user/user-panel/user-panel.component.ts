@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { EditorMode } from 'src/app/entities/editor';
 import { User } from 'src/app/entities/user';
 import { EditorService } from 'src/app/services/editor.service';
@@ -9,14 +10,25 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './user-panel.component.html',
   styleUrls: ['./user-panel.component.less']
 })
-export class UserPanelComponent implements OnInit {
+export class UserPanelComponent implements OnInit, OnDestroy {
 
   user: User | undefined;
   mode: EditorMode = EditorMode.None;
 
-  constructor(public userService:UserService,private editorService:EditorService) { }
+  subscriptions: Subscription[] = []
+  users: User[] = [];
+
+  constructor(public userService: UserService, private editorService: EditorService) { }
 
   ngOnInit(): void {
+    let subscription: Subscription = this.userService.users$.subscribe((users) => {
+        console.log("KEKEKKEKEKEKEKEKEKKE")
+        this.users = users;
+      }
+    );
+
+    this.subscriptions.push(subscription);
+
     this.editorService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
@@ -30,5 +42,10 @@ export class UserPanelComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
 
 }
