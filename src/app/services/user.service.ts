@@ -9,16 +9,13 @@ import { LocalStorageExstensions } from "./local-sctorage-exstensions";
 })
 export class UserService implements IEntityCrud<User> {
 
-    private users: User[] = [];
-    private _users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
-    public users$: Observable<User[]>
+    private initState = [];
+    private _users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.initState);
+    public users$: Observable<User[]>= this._users$.asObservable();
   
     constructor() {
-        this._users$ = new BehaviorSubject<User[]>([]);
-        this.users$ = this._users$.asObservable();
-
         if (!localStorage.getItem('users')) {
-            LocalStorageExstensions.updateLocalStorage('users', []);
+            LocalStorageExstensions.updateLocalStorage('users', this.initState);
         }
         else {
             this.getAllEntities();
@@ -26,20 +23,26 @@ export class UserService implements IEntityCrud<User> {
     }
 
     getAllEntities(): User[] {
-        this.users = LocalStorageExstensions.getDataFromStorage('users');
-        this._users$.next(this.users);
-        return this.users;
+        const users = LocalStorageExstensions.getDataFromStorage('users') as User[];
+        this._users$.next(users);
+        return users;
+    }
+
+    private getUsers(): User[] {
+        return this._users$.value;
     }
 
     getEntity(id: number): User | undefined {
-        let user = this.users.find(user => user.id === id);
+        const users = this.getUsers();
+        let user = users.find(user => user.id === id);
         console.log(user);
         return user;
     }
 
-    addEntity(user: User): void {
-        const lastIndex = this.users.length - 1;
-        const lastElement: User | undefined = this.users[lastIndex];
+    addEntity(user: User): void {   
+        const users = this.getUsers();
+        const lastIndex = users.length - 1;
+        const lastElement: User | undefined = users[lastIndex];
 
         if (lastElement && lastElement.id) {
             user.id = lastElement.id;
@@ -48,30 +51,32 @@ export class UserService implements IEntityCrud<User> {
             user.id = 1;
         }
 
-        this.users.push(user);
-        LocalStorageExstensions.updateLocalStorage('users', this.users);
+        users.push(user);
+        LocalStorageExstensions.updateLocalStorage('users', users);
 
-        this._users$.next(this.users);
+        this._users$.next(users);
     }
 
     updateEntity(user: User): void {
-        const userIndex = this.users.findIndex(x => x.id == user.id);
-        this.users[userIndex] = user;
-        LocalStorageExstensions.updateLocalStorage('users', this.users);
+        const users = this.getUsers();
+        const userIndex = users.findIndex(x => x.id == user.id);
+        users[userIndex] = user;
+        LocalStorageExstensions.updateLocalStorage('users', users);
 
-        this._users$.next(this.users);
+        this._users$.next(users);
     }
 
-    deleteEntity(id: number): void {
-        const indexOfUser: number = this.users.findIndex(task => task.id === id);
-        const deletedUser: User[] = this.users.splice(indexOfUser, 1);
+    deleteEntity(id: number): void { 
+        const users = this.getUsers();
+        const indexOfUser: number = users.findIndex(task => task.id === id);
+        const deletedUser: User[] = users.splice(indexOfUser, 1);
 
         if (deletedUser.length !== 1) {
             console.warn("Something went wrong while deleting user.");
         }
 
-        LocalStorageExstensions.updateLocalStorage('users', this.users);
-        this._users$.next(this.users);
+        LocalStorageExstensions.updateLocalStorage('users', users);
+        this._users$.next(users);
     }
 
 }

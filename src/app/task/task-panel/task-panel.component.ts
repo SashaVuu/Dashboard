@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs';
 })
 export class TaskPanelComponent implements OnInit, OnDestroy {
 
+  public tasks$ = this.taskService.tasks$;
+
   task: Task | undefined;
   mode: EditorMode = EditorMode.None;
 
   subscriptions: Subscription[] = []
-  tasks: Task[] = [];
 
   title = 'Dashboard';
 
@@ -23,15 +24,7 @@ export class TaskPanelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let subscription: Subscription = this.taskService.tasks$.subscribe((tasks) => {
-          console.log("HEHHEHEHEHEHHEHE")
-          this.tasks = tasks;
-      }
-    );
-    
-    this.subscriptions.push(subscription);
-
-    this.editorService.editorModeSubject$.subscribe((editorMode) => {
+    this.subscriptions.push(this.editorService.editorModeSubject$.subscribe((editorMode) => {
 
       this.mode = editorMode.mode;
 
@@ -43,7 +36,7 @@ export class TaskPanelComponent implements OnInit, OnDestroy {
         this.task = undefined;
       }
 
-    });
+    }));
   }
 
   ngOnDestroy(): void {
