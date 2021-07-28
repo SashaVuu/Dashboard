@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FilterContext, UserFilterStrategy } from 'src/app/core/pipes/strategy';
 import { EditorMode } from 'src/app/entities/editor';
 import { User } from 'src/app/entities/user';
 import { EditorService } from 'src/app/services/editor.service';
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-panel.component.less'],
 })
 export class UserPanelComponent implements OnInit, OnDestroy {
+  public search$ = this.userService.search$;
   public users$ = this.userService.users$;
   user: User | undefined;
   mode: EditorMode = EditorMode.None;
@@ -23,6 +25,15 @@ export class UserPanelComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    
+    this.subscriptions.push(
+      this.search$.subscribe((event) => {
+        const searchString = event.value;
+        const filterContext = new FilterContext(new UserFilterStrategy());
+        this.userService.filterEntity(searchString, filterContext);
+      })
+    );
+
     this.subscriptions.push(
       this.editorService.editorModeSubject$.subscribe((editorMode) => {
         this.mode = editorMode.mode;

@@ -5,12 +5,12 @@ export interface IFilterStrategy {
 export class UserFilterStrategy implements IFilterStrategy {
 
     public filter(items: any[], searchString: string): any[] {
-        if (searchString === "") {
+        if (!searchString) {
             return items;
         }
         return items.filter((item) => {
             const itemString: string = item.name + " " + item.surname;
-            return itemString.toUpperCase().includes(searchString.toString().toUpperCase());
+            return itemString.toString().toUpperCase().includes(searchString.toString().toUpperCase());
         });
     }
 
@@ -18,7 +18,7 @@ export class UserFilterStrategy implements IFilterStrategy {
 
 export class TaskFilterStrategy implements IFilterStrategy {
     public filter(items: any[], searchString: string): any[] {
-        if (searchString === "") {
+        if (!searchString) {
             return items;
         }
         return items.filter((item) => item.name.toUpperCase().includes(searchString.toString().toUpperCase()));

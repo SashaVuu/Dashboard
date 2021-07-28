@@ -9,15 +9,16 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-user-list-panel',
   templateUrl: './user-list-panel.component.html',
-  styleUrls: ['./user-list-panel.component.less']
+  styleUrls: ['./user-list-panel.component.less'],
 })
 export class UserListPanelComponent {
-
   @Input() users: User[] = [];
-  searchString: string = "";
-  filterContext =  new FilterContext(new UserFilterStrategy());
-  
-  constructor(private editorService: EditorService, private userService: UserService, private storeService: StoreService) { }
+
+  constructor(
+    private editorService: EditorService,
+    private userService: UserService,
+    private storeService: StoreService
+  ) {}
 
   showAddEditor(): void {
     this.editorService.changeEditorMode(EditorMode.Add);
@@ -31,12 +32,7 @@ export class UserListPanelComponent {
     this.editorService.changeEditorMode(EditorMode.Edit, id);
   }
 
-  refreshList() {
-    this.users = this.userService.getAllEntities();
+  filter(event: any) {
+    this.userService.search$.next(event);
   }
-
-  changeSearchString(event: any) {
-    this.searchString = event.value; 
-  }
-  
 }

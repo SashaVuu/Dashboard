@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { FilterContext } from "../core/pipes/strategy";
 import { User } from "../entities/user";
 import { IEntityCrud } from "./entity-crud.interface";
 import { LocalStorageExstensions } from "./local-sctorage-exstensions";
@@ -11,8 +12,9 @@ export class UserService implements IEntityCrud<User> {
 
     private initState = [];
     private _users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.initState);
-    public users$: Observable<User[]>= this._users$.asObservable();
-  
+    public users$: Observable<User[]> = this._users$.asObservable();
+    public search$: Subject<any> = new Subject<any>();
+    
     constructor() {
         if (!localStorage.getItem('users')) {
             LocalStorageExstensions.updateLocalStorage('users', this.initState);
@@ -39,7 +41,13 @@ export class UserService implements IEntityCrud<User> {
         return user;
     }
 
-    addEntity(user: User): void {   
+    filterEntity(searchString: string, context: FilterContext): void {
+        const users = this.getAllEntities();
+        const filteredUsers = context.executeStrategy(users, searchString);
+        this._users$.next(filteredUsers);
+    }
+
+    addEntity(user: User): void {
         const users = this.getUsers();
         const lastIndex = users.length - 1;
         const lastElement: User | undefined = users[lastIndex];
@@ -66,7 +74,7 @@ export class UserService implements IEntityCrud<User> {
         this._users$.next(users);
     }
 
-    deleteEntity(id: number): void { 
+    deleteEntity(id: number): void {
         const users = this.getUsers();
         const indexOfUser: number = users.findIndex(task => task.id === id);
         const deletedUser: User[] = users.splice(indexOfUser, 1);

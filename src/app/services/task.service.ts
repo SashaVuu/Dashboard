@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { FilterContext } from '../core/pipes/strategy';
 import { Task } from '../entities/task';
 import { IEntityCrud } from './entity-crud.interface';
 import { LocalStorageExstensions } from './local-sctorage-exstensions';
@@ -12,6 +13,8 @@ export class TaskService implements IEntityCrud<Task> {
   private initState = [];
   private _tasks$: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>(this.initState);
   public tasks$: Observable<Task[]> = this._tasks$.asObservable();
+  public search$: Subject<any> = new Subject<any>();
+
 
   constructor() {
     if (!localStorage.getItem('tasks')) {
@@ -20,6 +23,12 @@ export class TaskService implements IEntityCrud<Task> {
     else {
       this.getAllEntities();
     }
+  }
+
+  filterEntity(searchString: string, context: FilterContext): void {
+    const tasks = this.getAllEntities();
+    const filteredTasks = context.executeStrategy(tasks, searchString);
+    this._tasks$.next(filteredTasks);
   }
 
   getAllEntities(): Task[] {
@@ -31,7 +40,7 @@ export class TaskService implements IEntityCrud<Task> {
   private getTasks(): Task[] {
     return this._tasks$.value;
   }
-
+  
   getEntity(id: number): Task | undefined {
     const tasks = this.getTasks();
     let task = tasks.find(task => task.id === id);

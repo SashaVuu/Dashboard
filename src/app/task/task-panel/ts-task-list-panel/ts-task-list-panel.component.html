@@ -8,11 +8,11 @@
 <div class="search-container">
   <div class="search-input">
     <p>Search:</p>
-    <input type="text" (input)="changeSearchString($event.target)"  class="form-control"/>
+    <input type="text" (input)="filter($event.target)"  class="form-control"/>
   </div>
 </div>
 
-<app-list [list]="tasks | filter: searchString : filterContext"  [itemTmpl]="itemTmpl" (refresh)="refreshList()"></app-list>
+<app-list [list]="tasks"  [itemTmpl]="itemTmpl"></app-list>
 
 
 <ng-template #itemTmpl let-context="context">

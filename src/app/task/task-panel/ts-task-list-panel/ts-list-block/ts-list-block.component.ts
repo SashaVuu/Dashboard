@@ -6,17 +6,11 @@ import { Task } from 'src/app/entities/task';
   templateUrl: './ts-list-block.component.html',
   styleUrls: ['./ts-list-block.component.less']
 })
-export class TsListBlockComponent implements OnInit {
+export class TsListBlockComponent {
 
   @Input() task?:Task; 
   @Output() deleteTask = new EventEmitter<number>();
   @Output() editTask = new EventEmitter<number>();
 
   constructor() { }
-
-  ngOnInit(): void {
-    console.log("NgOnInit");
-    console.log(this.task);
-  }
-
 }
